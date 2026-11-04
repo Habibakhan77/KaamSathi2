@@ -1,0 +1,111 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Noto+Nastaliq+Urdu:wght@400;700&family=Noto+Naskh+Arabic:wght@400;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* WCAG AA Compliant Light Theme Tokens */
+  --bg-main: #F7FAF8;
+  --surface: #FFFFFF;
+  --surface-elevated: #EDF4F0;
+  --surface-subtle: #F0F5F2;
+  
+  --text-primary: #151515;       /* 16.2:1 contrast against #F7FAF8 */
+  --text-secondary: #3E4F47;     /* 6.8:1 contrast against #F7FAF8 */
+  --text-muted: #4D6257;         /* 5.1:1 contrast against #F7FAF8 */
+  --text-on-primary: #FFFFFF;    /* 6.9:1 contrast against #0A5C2E */
+  
+  --brand-primary: #0A5C2E;      /* Authentic Logo Green */
+  --brand-dark: #064A25;         /* Gradient depth */
+  --brand-light: #E8F5ED;        /* Pill & badge backgrounds */
+  --accent-amber: #F5A524;       /* Star rating & urgency chips */
+  --accent-amber-text: #151515;  /* Maximum contrast text on amber */
+
+  --border-subtle: #D8E4DC;
+  --border-strong: #B2C9BC;
+  
+  --font-inter: 'Inter', sans-serif;
+  --font-jakarta: 'Plus Jakarta Sans', sans-serif;
+  --font-urdu: 'Noto Nastaliq Urdu', serif;
+  --font-pashto: 'Noto Naskh Arabic', sans-serif;
+}
+
+.dark {
+  /* WCAG AA Compliant Dark Theme Tokens */
+  --bg-main: #0B1410;
+  --surface: #111F18;
+  --surface-elevated: #192D23;
+  --surface-subtle: #14251D;
+  
+  --text-primary: #F2F7F4;       /* 17.5:1 contrast against #0B1410 */
+  --text-secondary: #B8C9C0;     /* 8.4:1 contrast against #0B1410 */
+  --text-muted: #93A89D;         /* 5.4:1 contrast against #0B1410 */
+  --text-on-primary: #FFFFFF;
+  
+  --brand-primary: #1EB55E;      /* High-visibility green for dark backgrounds */
+  --brand-dark: #0A5C2E;
+  --brand-light: #163824;
+  --accent-amber: #F5A524;
+  --accent-amber-text: #151515;
+
+  --border-subtle: #24382E;
+  --border-strong: #345041;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--bg-main);
+  color: var(--text-primary);
+  font-family: var(--font-inter);
+  line-height: 1.6;
+  font-size: 1rem;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Headings typography */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-jakarta);
+  color: var(--text-primary);
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+/* Urdu & Pashto script styling */
+[dir="rtl"] {
+  text-align: right;
+}
+
+[dir="rtl"] h1,
+[dir="rtl"] h2,
+[dir="rtl"] h3 {
+  line-height: 1.8;
+  letter-spacing: 0;
+}
+
+/* Accessible focus ring */
+:focus-visible {
+  outline: 2px solid var(--brand-primary);
+  outline-offset: 2px;
+}
+
+/* Respect user's motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

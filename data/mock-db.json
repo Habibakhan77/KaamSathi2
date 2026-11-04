@@ -1,0 +1,589 @@
+{
+  "profiles": [
+    {
+      "id": "usr-cust-01",
+      "email": "customer@kaamsaathi.pk",
+      "role": "customer",
+      "fullName": "Ahmad Jan",
+      "phone": "0345-9123456",
+      "city": "Mingora",
+      "district": "Swat",
+      "address": "Mohallah Shahdara, Mingora, Swat",
+      "createdAt": "2024-09-01T10:00:00Z",
+      "isActive": true
+    },
+    {
+      "id": "usr-prov-01",
+      "email": "provider@kaamsaathi.pk",
+      "role": "provider",
+      "fullName": "Rashid Khan",
+      "phone": "0346-8234567",
+      "city": "Saidu Sharif",
+      "district": "Swat",
+      "address": "Main Hospital Road, Saidu Sharif",
+      "createdAt": "2024-09-02T11:00:00Z",
+      "isActive": true
+    },
+    {
+      "id": "usr-prov-02",
+      "email": "gulzar.ac@kaamsaathi.pk",
+      "role": "provider",
+      "fullName": "Gulzar Ahmed",
+      "phone": "0347-1122334",
+      "city": "Mingora",
+      "district": "Swat",
+      "address": "New Road, Near Nishat Chowk, Mingora",
+      "createdAt": "2024-09-05T09:30:00Z",
+      "isActive": true
+    },
+    {
+      "id": "usr-prov-03",
+      "email": "shah.plumber@kaamsaathi.pk",
+      "role": "provider",
+      "fullName": "Shah Faisal",
+      "phone": "0348-9988776",
+      "city": "Kanju",
+      "district": "Swat",
+      "address": "Airport Road, Kanju Township",
+      "createdAt": "2024-09-10T14:15:00Z",
+      "isActive": true
+    },
+    {
+      "id": "usr-prov-04",
+      "email": "bakht.carpenter@kaamsaathi.pk",
+      "role": "provider",
+      "fullName": "Bakht Zada",
+      "phone": "0342-5544332",
+      "city": "Barikot",
+      "district": "Swat",
+      "address": "Bazaar Barikot, Swat",
+      "createdAt": "2024-09-12T08:00:00Z",
+      "isActive": true
+    },
+    {
+      "id": "usr-prov-05",
+      "email": "tariq.solar@kaamsaathi.pk",
+      "role": "provider",
+      "fullName": "Tariq Mehmood",
+      "phone": "0341-7788990",
+      "city": "Saidu Sharif",
+      "district": "Swat",
+      "address": "Near Wadudia Hall, Saidu Sharif",
+      "createdAt": "2024-09-15T16:00:00Z",
+      "isActive": true
+    },
+    {
+      "id": "usr-admin-01",
+      "email": "admin@kaamsaathi.pk",
+      "role": "admin",
+      "fullName": "Habiba Khan & Laiba Khaist (Supervised by Muhammad Hamza)",
+      "phone": "0340-0000000",
+      "city": "Mingora",
+      "district": "Swat",
+      "address": "Dept of Computer Science & SE, University of Swat",
+      "createdAt": "2024-08-01T00:00:00Z",
+      "isActive": true
+    }
+  ],
+  "providerProfiles": [
+    {
+      "id": "prov-prof-01",
+      "userId": "usr-prov-01",
+      "businessName": "Rashid Electric & Smart Inverter Services",
+      "cnic": "15602-1234567-1",
+      "category": "electrician",
+      "skills": ["House Wiring", "UPS Installation", "Circuit Breakers", "Solar Inverters", "LED Concealed Lighting"],
+      "experienceYears": 9,
+      "hourlyRate": 800,
+      "serviceAreas": ["Saidu Sharif", "Mingora", "Kanju"],
+      "verificationStatus": "approved",
+      "verifiedAt": "2024-09-04T12:00:00Z",
+      "rating": 4.9,
+      "reviewCount": 42,
+      "completedJobs": 68,
+      "isAvailable": true,
+      "isPromoted": true,
+      "subscriptionTier": "pro",
+      "bio": "Certified electrical technician from VTI Swat. Specialist in fault-finding, heavy appliance wiring, and 3-phase domestic setups. Polite, punctual, and equipped with genuine testing tools.",
+      "avatar": "/avatars/provider-1.jpg"
+    },
+    {
+      "id": "prov-prof-02",
+      "userId": "usr-prov-02",
+      "businessName": "Swat Chill AC & Heating Solutions",
+      "cnic": "15602-7654321-3",
+      "category": "ac-technician",
+      "skills": ["Inverter AC Gas Refill", "Leakage Welding", "PCB Board Diagnostics", "Deep Chemical Wash", "Heating Cycle Repair"],
+      "experienceYears": 7,
+      "hourlyRate": 1200,
+      "serviceAreas": ["Mingora", "Saidu Sharif", "Fizagat"],
+      "verificationStatus": "approved",
+      "verifiedAt": "2024-09-08T15:00:00Z",
+      "rating": 4.8,
+      "reviewCount": 35,
+      "completedJobs": 51,
+      "isAvailable": true,
+      "isPromoted": true,
+      "subscriptionTier": "elite",
+      "bio": "Experienced inverter refrigeration technician. We test gas pressure using digital manifolds and guarantee zero leaks after welding.",
+      "avatar": "/avatars/provider-2.jpg"
+    },
+    {
+      "id": "prov-prof-03",
+      "userId": "usr-prov-03",
+      "businessName": "Faisal Sanitary & Master Plumbing",
+      "cnic": "15602-9871234-5",
+      "category": "plumber",
+      "skills": ["PPRC / CPVC Hot & Cold Piping", "Water Tank Float Automation", "Geyser Installation & Descaling", "Underground Leak Detection"],
+      "experienceYears": 12,
+      "hourlyRate": 700,
+      "serviceAreas": ["Kanju", "Mingora", "Barikot"],
+      "verificationStatus": "approved",
+      "verifiedAt": "2024-09-12T10:00:00Z",
+      "rating": 4.7,
+      "reviewCount": 29,
+      "completedJobs": 44,
+      "isAvailable": true,
+      "isPromoted": false,
+      "subscriptionTier": "basic",
+      "bio": "Master sanitary technician serving Swat valley for 12 years. Specialized in high-pressure bathroom fittings and Turkish concealed flush cisterns.",
+      "avatar": "/avatars/provider-3.jpg"
+    },
+    {
+      "id": "prov-prof-04",
+      "userId": "usr-prov-04",
+      "businessName": "Zada Woodcraft & Furniture Clinic",
+      "cnic": "15601-3322110-7",
+      "category": "carpenter",
+      "skills": ["Door Lock Replacement", "Custom Kitchen Cabinets", "Wood Lacquer Polish", "Sofa Frame Repair", "Ceiling Panels"],
+      "experienceYears": 15,
+      "hourlyRate": 900,
+      "serviceAreas": ["Barikot", "Mingora", "Saidu Sharif"],
+      "verificationStatus": "approved",
+      "verifiedAt": "2024-09-14T09:00:00Z",
+      "rating": 4.9,
+      "reviewCount": 18,
+      "completedJobs": 27,
+      "isAvailable": true,
+      "isPromoted": false,
+      "subscriptionTier": "basic",
+      "bio": "Generational Swati craftsman. Specializes in traditional Swati deodar woodwork as well as sleek contemporary MDF and UV sheet kitchen installations.",
+      "avatar": "/avatars/provider-4.jpg"
+    },
+    {
+      "id": "prov-prof-05",
+      "userId": "usr-prov-05",
+      "businessName": "Tariq Green Energy & Solar Systems",
+      "cnic": "15602-4455667-9",
+      "category": "solar",
+      "skills": ["Net Metering Setup", "Hybrid Inverter Config", "Lithium Battery Banking", "Solar Angle Optimization", "Lightning Arrestor"],
+      "experienceYears": 6,
+      "hourlyRate": 1500,
+      "serviceAreas": ["Saidu Sharif", "Mingora", "Kanju", "Fizagat", "Madyan"],
+      "verificationStatus": "pending",
+      "verifiedAt": null,
+      "rating": 4.6,
+      "reviewCount": 14,
+      "completedJobs": 20,
+      "isAvailable": true,
+      "isPromoted": false,
+      "subscriptionTier": "pro",
+      "bio": "PEC registered solar associate. Expert in 3kW to 20kW on-grid and hybrid solar installations tailored for Swat's climate and load variations.",
+      "avatar": "/avatars/provider-5.jpg"
+    }
+  ],
+  "categories": [
+    {
+      "id": "electrician",
+      "name": "Electrician",
+      "nameUrdu": "الیکٹریشن",
+      "namePashto": "برېښنا کار (الیکٹریشن)",
+      "slug": "electrician",
+      "icon": "Zap",
+      "description": "Wiring, breaker replacement, UPS, lighting, and short-circuit troubleshooting.",
+      "popularTasks": ["Breaker Tripping Fix", "UPS/Solar Wiring", "Ceiling Fan Installation", "Room Wiring Check"],
+      "basePricePkr": 600,
+      "providerCount": 12
+    },
+    {
+      "id": "plumber",
+      "name": "Plumber",
+      "nameUrdu": "پلمبر",
+      "namePashto": "پلمبر (نل ساز)",
+      "slug": "plumber",
+      "icon": "Wrench",
+      "description": "Pipe repairs, drain unblocking, bathroom sanitary fixtures, and geyser installation.",
+      "popularTasks": ["Concealed Pipe Leakage", "Motor & Pump Repair", "Geyser Gas/Electric Setup", "Drain Cleaning"],
+      "basePricePkr": 500,
+      "providerCount": 9
+    },
+    {
+      "id": "ac-technician",
+      "name": "AC Technician",
+      "nameUrdu": "اے سی ٹیکنیشن",
+      "namePashto": "د اے سي ماهر",
+      "slug": "ac-technician",
+      "icon": "Wind",
+      "description": "Split and inverter AC servicing, gas charging (R410/R32), PCB repair, and mounting.",
+      "popularTasks": ["Deep Chemical Wash", "Refrigerant Gas Refill", "Indoor Unit Water Drip", "Compressor Diagnostics"],
+      "basePricePkr": 1000,
+      "providerCount": 8
+    },
+    {
+      "id": "carpenter",
+      "name": "Carpenter",
+      "nameUrdu": "بڑھئی / کارپینٹر",
+      "namePashto": "ترکاڼ (کارپینټر)",
+      "slug": "carpenter",
+      "icon": "Hammer",
+      "description": "Wood polishing, kitchen cabinet fabrication, lock fixing, and wardrobe maintenance.",
+      "popularTasks": ["Door Jam Repair & Lock", "Kitchen Hinge Fix", "Sofa & Bed Frame Repair", "Lacquer Polish Touchup"],
+      "basePricePkr": 800,
+      "providerCount": 6
+    },
+    {
+      "id": "solar",
+      "name": "Solar & Inverter",
+      "nameUrdu": "سولر اور انورٹر",
+      "namePashto": "سولر او انورټر",
+      "slug": "solar",
+      "icon": "Sun",
+      "description": "Solar panel arrays, net-metering synchronization, battery banks, and hybrid inverters.",
+      "popularTasks": ["Inverter Settings Tuning", "Solar Structure Mounting", "Battery Hydrometer Test", "Wiring Inspection"],
+      "basePricePkr": 1200,
+      "providerCount": 5
+    },
+    {
+      "id": "painter",
+      "name": "Painter & Finisher",
+      "nameUrdu": "پینٹر",
+      "namePashto": "رنګمال (پینټر)",
+      "slug": "painter",
+      "icon": "Paintbrush",
+      "description": "Interior and exterior emulsion, weather-sheet, wall putty, and moisture dampness treatment.",
+      "popularTasks": ["Single Room Repaint", "Wall Dampness (Seelan) Treatment", "Ceiling Distemper", "Door Polish"],
+      "basePricePkr": 1500,
+      "providerCount": 7
+    },
+    {
+      "id": "cleaning",
+      "name": "Deep Cleaning",
+      "nameUrdu": "صفائی کی خدمات",
+      "namePashto": "د کور صفائي",
+      "slug": "cleaning",
+      "icon": "Sparkles",
+      "description": "Water tank sanitation, sofa deep extraction wash, carpet vacuuming, and post-construction scrubbing.",
+      "popularTasks": ["Overhead Tank Cleaning", "5-Seater Sofa Wash", "Post-Paint Deep Wash", "Kitchen Degreasing"],
+      "basePricePkr": 1200,
+      "providerCount": 4
+    },
+    {
+      "id": "appliance",
+      "name": "Appliance Repair",
+      "nameUrdu": "گھریلو سامان کی مرمت",
+      "namePashto": "د کورني سامان جوړول",
+      "slug": "appliance",
+      "icon": "Tv",
+      "description": "Washing machine, microwave oven, refrigerator compressor, and water dispenser overhaul.",
+      "popularTasks": ["Washing Machine Motor", "Microwave Heating Fix", "Fridge Thermostat / Gas", "Dispenser Cooling"],
+      "basePricePkr": 700,
+      "providerCount": 6
+    }
+  ],
+  "verificationRequests": [
+    {
+      "id": "verif-req-01",
+      "providerProfileId": "prov-prof-01",
+      "providerName": "Rashid Khan",
+      "cnicFrontUrl": "/mock-docs/cnic-front-1.jpg",
+      "cnicBackUrl": "/mock-docs/cnic-back-1.jpg",
+      "cnicNumber": "15602-1234567-1",
+      "skillProofUrl": "/mock-docs/vti-certificate-rashid.pdf",
+      "status": "approved",
+      "submittedAt": "2024-09-03T10:00:00Z",
+      "reviewedAt": "2024-09-04T12:00:00Z",
+      "reviewedBy": "admin@kaamsaathi.pk",
+      "adminNotes": "VTI Swat electrician diploma verified. CNIC photo matched with NADRA format standards."
+    },
+    {
+      "id": "verif-req-02",
+      "providerProfileId": "prov-prof-05",
+      "providerName": "Tariq Mehmood",
+      "cnicFrontUrl": "/mock-docs/cnic-front-5.jpg",
+      "cnicBackUrl": "/mock-docs/cnic-back-5.jpg",
+      "cnicNumber": "15602-4455667-9",
+      "skillProofUrl": "/mock-docs/solar-cert-tariq.pdf",
+      "status": "pending",
+      "submittedAt": "2024-10-28T16:20:00Z",
+      "reviewedAt": null,
+      "reviewedBy": null,
+      "adminNotes": null
+    },
+    {
+      "id": "verif-req-03",
+      "providerProfileId": "prov-prof-99",
+      "providerName": "Fake Profile Applicant",
+      "cnicFrontUrl": "/mock-docs/cnic-fake.jpg",
+      "cnicBackUrl": "/mock-docs/cnic-fake-b.jpg",
+      "cnicNumber": "15602-1234567-1",
+      "skillProofUrl": "/mock-docs/blank.pdf",
+      "status": "rejected",
+      "submittedAt": "2024-10-25T11:00:00Z",
+      "reviewedAt": "2024-10-26T09:00:00Z",
+      "reviewedBy": "admin@kaamsaathi.pk",
+      "adminNotes": "REJECTED: Duplicate CNIC detected matching existing provider Rashid Khan. Potential identity impersonation attempt flagged by fraud engine."
+    }
+  ],
+  "serviceRequests": [
+    {
+      "id": "req-01",
+      "customerId": "usr-cust-01",
+      "customerName": "Ahmad Jan",
+      "customerPhone": "0345-9123456",
+      "category": "ac-technician",
+      "title": "Inverter AC not cooling properly in master bedroom",
+      "description": "Haier 1.5 Ton DC inverter turns on and blows air, but outdoor unit trips after 10 minutes and air is not cold. Needs gas pressure check and leak test.",
+      "location": "Mohallah Shahdara, Mingora",
+      "area": "Mingora",
+      "urgency": "medium",
+      "preferredDate": "2024-11-05",
+      "preferredTimeSlot": "Afternoon (2 PM - 5 PM)",
+      "status": "quoted",
+      "aiParsed": {
+        "category": "ac-technician",
+        "location": "Mingora",
+        "urgency": "medium",
+        "detectedSymptoms": ["outdoor unit tripping", "insufficient cooling", "fan working"],
+        "recommendedQuestions": ["Is there any error code (e.g. E7, F3) on indoor unit display?"]
+      },
+      "createdAt": "2024-11-04T05:30:00Z"
+    },
+    {
+      "id": "req-02",
+      "customerId": "usr-cust-01",
+      "customerName": "Ahmad Jan",
+      "customerPhone": "0345-9123456",
+      "category": "electrician",
+      "title": "Main circuit breaker keeps tripping when geyser is switched on",
+      "description": "Emergency: Main distribution board smells slightly burnt. Whenever we turn on 2000W geyser, 32A breaker trips immediately.",
+      "location": "Mohallah Shahdara, Mingora",
+      "area": "Mingora",
+      "urgency": "high",
+      "preferredDate": "2024-11-04",
+      "preferredTimeSlot": "Immediate",
+      "status": "accepted",
+      "aiParsed": {
+        "category": "electrician",
+        "location": "Mingora",
+        "urgency": "high",
+        "detectedSymptoms": ["breaker tripping", "burning odor", "high load failure"],
+        "recommendedQuestions": ["Keep geyser breaker OFF to prevent fire hazard until technician arrives."]
+      },
+      "createdAt": "2024-11-04T02:00:00Z"
+    }
+  ],
+  "quotations": [
+    {
+      "id": "quot-01",
+      "requestId": "req-01",
+      "providerId": "usr-prov-02",
+      "providerName": "Gulzar Ahmed (Swat Chill AC)",
+      "providerRating": 4.8,
+      "providerExperience": "7 years",
+      "estimatedCost": 2200,
+      "duration": "1.5 hours",
+      "breakdown": [
+        { "item": "Inspection & Pressure Gauge Diagnostics", "cost": 600 },
+        { "item": "Capacitor / Sensor check & coil wash", "cost": 800 },
+        { "item": "R410 Refrigerant top-up (up to 30 PSI if needed)", "cost": 800 }
+      ],
+      "note": "Can visit today between 3 PM to 5 PM. 15-day service guarantee included.",
+      "status": "pending",
+      "createdAt": "2024-11-04T06:10:00Z"
+    },
+    {
+      "id": "quot-02",
+      "requestId": "req-02",
+      "providerId": "usr-prov-01",
+      "providerName": "Rashid Khan (Rashid Electric)",
+      "providerRating": 4.9,
+      "providerExperience": "9 years",
+      "estimatedCost": 1500,
+      "duration": "45 mins",
+      "breakdown": [
+        { "item": "Urgent Emergency Callout", "cost": 500 },
+        { "item": "Distribution Board Terminal Tightening & Load Balance", "cost": 500 },
+        { "item": "Breaker Replacement (Labor only; breaker part extra or customer provided)", "cost": 500 }
+      ],
+      "note": "Ready to arrive within 35 minutes. Please keep geyser breaker in OFF position.",
+      "status": "accepted",
+      "createdAt": "2024-11-04T02:45:00Z"
+    }
+  ],
+  "bookings": [
+    {
+      "id": "bk-01",
+      "requestId": "req-02",
+      "quotationId": "quot-02",
+      "customerId": "usr-cust-01",
+      "customerName": "Ahmad Jan",
+      "customerPhone": "0345-9123456",
+      "customerAddress": "House #12, Mohallah Shahdara, Mingora, Swat",
+      "providerId": "usr-prov-01",
+      "providerName": "Rashid Khan",
+      "providerPhone": "0346-8234567",
+      "category": "electrician",
+      "totalAmount": 1500,
+      "paymentMethod": "Cash on Completion (Online JazzCash/Easypaisa Coming Soon)",
+      "timeline": [
+        { "status": "requested", "timestamp": "2024-11-04T02:00:00Z", "note": "Customer posted urgent electrical request" },
+        { "status": "quoted", "timestamp": "2024-11-04T02:45:00Z", "note": "Rashid Khan submitted quote of PKR 1,500" },
+        { "status": "accepted", "timestamp": "2024-11-04T03:00:00Z", "note": "Customer Ahmad Jan accepted quote" },
+        { "status": "on_the_way", "timestamp": "2024-11-04T03:15:00Z", "note": "Rashid Khan dispatched on motorbike from Saidu Sharif" },
+        { "status": "in_progress", "timestamp": "2024-11-04T03:40:00Z", "note": "Technician on site inspecting distribution board" }
+      ],
+      "currentStatus": "in_progress",
+      "scheduledDate": "2024-11-04",
+      "createdAt": "2024-11-04T03:00:00Z"
+    },
+    {
+      "id": "bk-past-01",
+      "requestId": "req-past-01",
+      "quotationId": "quot-past-01",
+      "customerId": "usr-cust-01",
+      "customerName": "Ahmad Jan",
+      "customerPhone": "0345-9123456",
+      "customerAddress": "House #12, Mohallah Shahdara, Mingora, Swat",
+      "providerId": "usr-prov-03",
+      "providerName": "Shah Faisal",
+      "providerPhone": "0348-9988776",
+      "category": "plumber",
+      "totalAmount": 1200,
+      "paymentMethod": "Cash on Completion",
+      "timeline": [
+        { "status": "requested", "timestamp": "2024-10-15T09:00:00Z", "note": "Service requested" },
+        { "status": "quoted", "timestamp": "2024-10-15T09:30:00Z", "note": "Quote PKR 1,200 accepted" },
+        { "status": "accepted", "timestamp": "2024-10-15T09:40:00Z", "note": "Booking confirmed" },
+        { "status": "on_the_way", "timestamp": "2024-10-15T10:15:00Z", "note": "Provider on the way" },
+        { "status": "in_progress", "timestamp": "2024-10-15T10:45:00Z", "note": "Replacing mixer tap" },
+        { "status": "completed", "timestamp": "2024-10-15T11:30:00Z", "note": "Work successfully tested and handed over" }
+      ],
+      "currentStatus": "completed",
+      "scheduledDate": "2024-10-15",
+      "createdAt": "2024-10-15T09:40:00Z"
+    }
+  ],
+  "reviews": [
+    {
+      "id": "rev-01",
+      "bookingId": "bk-past-01",
+      "providerId": "usr-prov-03",
+      "customerId": "usr-cust-01",
+      "customerName": "Ahmad Jan",
+      "rating": 5,
+      "comment": "Shah Faisal bhai arrived on time in Mingora from Kanju. Changed our kitchen sink concealed mixer with zero leakage. Very polite and honest pricing.",
+      "createdAt": "2024-10-15T12:00:00Z"
+    },
+    {
+      "id": "rev-02",
+      "bookingId": "bk-past-02",
+      "providerId": "usr-prov-01",
+      "customerId": "usr-cust-02",
+      "customerName": "Dr. Farooq Shah (Saidu Teaching Hospital)",
+      "rating": 5,
+      "comment": "Rashid Khan diagnosed our inverter tripping in 10 minutes. Clean wiring and genuine breaker installed. Strongly recommended in Swat!",
+      "createdAt": "2024-10-18T16:00:00Z"
+    }
+  ],
+  "complaints": [
+    {
+      "id": "cmp-01",
+      "bookingId": "bk-past-01",
+      "customerId": "usr-cust-01",
+      "providerId": "usr-prov-03",
+      "subject": "Minor water drop around teflon tape joint",
+      "description": "After two days of tap installation, small droplet seeps from threaded joint. Requesting technician to tighten teflon seal under 7-day guarantee.",
+      "status": "resolved",
+      "adminNotes": "Shah Faisal revisited Ahmad Jan on Oct 18 and re-threaded with fresh heavy-duty teflon tape at zero extra cost. Customer confirmed satisfied.",
+      "createdAt": "2024-10-17T08:00:00Z",
+      "resolvedAt": "2024-10-18T11:00:00Z"
+    }
+  ],
+  "fraudFlags": [
+    {
+      "id": "frd-01",
+      "providerId": "usr-prov-99",
+      "severity": "high",
+      "flagType": "duplicate_cnic",
+      "description": "Duplicate CNIC 15602-1234567-1 detected during verification request #verif-req-03. Matches existing verified provider Rashid Khan.",
+      "status": "blocked",
+      "flaggedAt": "2024-10-25T11:02:00Z"
+    },
+    {
+      "id": "frd-02",
+      "providerId": "usr-prov-02",
+      "severity": "low",
+      "flagType": "abnormal_pricing_deviation",
+      "description": "Quotation of PKR 8,500 submitted for routine AC washing is 340% higher than median Swat benchmark (PKR 1,200). Automated pricing advisory issued.",
+      "status": "reviewed",
+      "flaggedAt": "2024-10-20T14:10:00Z"
+    },
+    {
+      "id": "frd-03",
+      "providerId": "usr-prov-05",
+      "severity": "medium",
+      "flagType": "unverified_high_quote_activity",
+      "description": "Provider submitted 5 quotes before CNIC verification was approved by administration. Quotes kept in pending escrow hold.",
+      "status": "investigating",
+      "flaggedAt": "2024-11-01T09:30:00Z"
+    }
+  ],
+  "subscriptionPlans": [
+    {
+      "id": "plan-basic",
+      "name": "Hunar Basic",
+      "pricePkr": 0,
+      "billingCycle": "Free Forever",
+      "features": [
+        "Verified badge after CNIC & skill audit",
+        "Up to 15 quote submissions per month",
+        "Standard search placement",
+        "Direct customer chat & calling",
+        "Standard 10% platform fee per completed job"
+      ],
+      "isPopular": false,
+      "badge": "Pilot Free"
+    },
+    {
+      "id": "plan-pro",
+      "name": "Ustad Pro Partner",
+      "pricePkr": 1499,
+      "billingCycle": "per month",
+      "features": [
+        "Priority ranking in Swat search results",
+        "Unlimited quotation submissions",
+        "Featured 'PRO' badge on profile",
+        "Reduced 5% platform fee per completed job",
+        "AI instant quote recommendations",
+        "Weekly SMS alerts for high-value jobs"
+      ],
+      "isPopular": true,
+      "badge": "Most Recommended"
+    },
+    {
+      "id": "plan-elite",
+      "name": "Swat Guild Elite",
+      "pricePkr": 3499,
+      "billingCycle": "per month",
+      "features": [
+        "Top 'Promoted' spotlight on Homepage & AI search",
+        "Zero percent commission on first 20 jobs",
+        "Dedicated corporate commercial bookings",
+        "University of Swat verified guild certificate",
+        "Dedicated phone account manager"
+      ],
+      "isPopular": false,
+      "badge": "For Master Workshops"
+    }
+  ]
+}
