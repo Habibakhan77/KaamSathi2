@@ -7,10 +7,12 @@ import {
   Phone,
   Mail,
   Send,
-  MessageSquare,
-  ShieldCheck,
   ExternalLink,
+  Linkedin,
+  Facebook,
+  ShieldCheck,
 } from "lucide-react";
+import { contactConfig, getWhatsAppUrl } from "@/config/contact";
 
 export default function ContactPage() {
   const [name, setName] = useState("");
@@ -18,6 +20,7 @@ export default function ContactPage() {
   const [phone, setPhone] = useState("");
   const [message, setMessage] = useState("");
   const [isSent, setIsSent] = useState(false);
+  const waUrl = getWhatsAppUrl();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -36,7 +39,7 @@ export default function ContactPage() {
     <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-12">
       <div className="text-center max-w-2xl mx-auto space-y-3">
         <span className="px-3.5 py-1 rounded-full bg-emerald-50 dark:bg-emerald-950/70 border border-emerald-200 dark:border-emerald-800 text-xs font-bold text-[#0A5C2E] dark:text-[#1EB55E]">
-          We Are Here in Swat Valley
+          {contactConfig.pilotNotice}
         </span>
         <h1 className="text-3xl sm:text-5xl font-extrabold text-[#151515] dark:text-[#F2F7F4]">
           Contact KaamSaathi
@@ -77,8 +80,13 @@ export default function ContactPage() {
               </div>
               <div className="space-y-0.5">
                 <strong className="text-[#151515] dark:text-[#F2F7F4]">Email Helpdesk</strong>
-                <p className="text-[#3E4F47] dark:text-[#B8C9C0]">
-                  kaamsaathi.swat@gmail.com
+                <p>
+                  <a
+                    href={`mailto:${contactConfig.email}`}
+                    className="text-[#0A5C2E] dark:text-[#1EB55E] font-medium hover:underline"
+                  >
+                    {contactConfig.email}
+                  </a>
                 </p>
               </div>
             </div>
@@ -89,22 +97,47 @@ export default function ContactPage() {
               </div>
               <div className="space-y-0.5">
                 <strong className="text-[#151515] dark:text-[#F2F7F4]">Helpline &amp; WhatsApp</strong>
-                <p className="text-[#3E4F47] dark:text-[#B8C9C0]">
-                  +92 345 0000000 (Mon – Sat: 9:00 AM – 6:00 PM)
+                <p className="text-[#3E4F47] dark:text-[#B8C9C0] font-mono">
+                  {contactConfig.phoneDisplay} (Mon – Sat: 9:00 AM – 6:00 PM)
                 </p>
               </div>
             </div>
           </div>
 
-          <div className="pt-4 border-t border-[#D8E4DC] dark:border-[#24382E]">
+          {/* Social Profiles */}
+          <div className="pt-2 border-t border-[#D8E4DC] dark:border-[#24382E] flex items-center gap-3">
+            <span className="font-bold text-[#151515] dark:text-[#F2F7F4]">Profiles:</span>
             <a
-              href="https://wa.me/923450000000?text=Salam%20KaamSaathi"
+              href={contactConfig.linkedIn}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="LinkedIn"
+              className="px-3 py-1.5 rounded-xl border border-[#D8E4DC] dark:border-[#24382E] text-xs font-semibold flex items-center gap-1.5 hover:text-[#0A5C2E] dark:hover:text-[#1EB55E]"
+            >
+              <Linkedin className="w-3.5 h-3.5" />
+              <span>LinkedIn</span>
+            </a>
+            <a
+              href={contactConfig.facebookUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Facebook"
+              className="px-3 py-1.5 rounded-xl border border-[#D8E4DC] dark:border-[#24382E] text-xs font-semibold flex items-center gap-1.5 hover:text-[#0A5C2E] dark:hover:text-[#1EB55E]"
+            >
+              <Facebook className="w-3.5 h-3.5" />
+              <span>{contactConfig.facebookHandle}</span>
+            </a>
+          </div>
+
+          <div className="pt-2">
+            <a
+              href={waUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="w-full py-3 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-xs shadow-md flex items-center justify-center gap-2 transition-colors"
             >
               <Phone className="w-4 h-4" />
-              <span>Connect on Official WhatsApp</span>
+              <span>Chat on Official WhatsApp ({contactConfig.phoneDisplay})</span>
               <ExternalLink className="w-3.5 h-3.5 opacity-70" />
             </a>
           </div>
