@@ -18,10 +18,13 @@ import {
   Sparkles,
   Wrench,
   Globe,
+  Check,
 } from "lucide-react";
 import { Logo } from "@/components/brand/Logo";
 import { useLanguage } from "@/lib/i18n/LanguageContext";
 import { SupportedLanguage } from "@/lib/i18n/translations";
+import { useLocation } from "@/lib/location/LocationContext";
+import { DEFAULT_REGION, SWAT_AREAS, SelectedLocation } from "@/lib/location/swat-areas";
 
 // ─── Static data ────────────────────────────────────────────────────────────
 
@@ -36,19 +39,6 @@ const SERVICE_CATEGORIES = [
   { label: "Appliance Repair", href: "/services?cat=appliance", icon: Wrench },
 ];
 
-const LOCATIONS = [
-  "Lahore",
-  "Karachi",
-  "Islamabad",
-  "Peshawar",
-  "Swat",
-  "Mingora",
-  "Saidu Sharif",
-  "Kanju",
-  "Barikot",
-  "Madyan",
-  "Fizagat",
-];
 
 const LANGUAGES: { code: SupportedLanguage; native: string }[] = [
   { code: "en", native: "English" },
@@ -74,6 +64,44 @@ function useOutsideClick(
   }, [refs, handler]);
 }
 
+// ─── Location option row (desktop dropdown) ─────────────────────────────────
+
+function LocationOption({
+  label,
+  selected,
+  onSelect,
+  emphasis = false,
+}: {
+  label: string;
+  selected: boolean;
+  onSelect: () => void;
+  emphasis?: boolean;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onSelect}
+      role="option"
+      aria-selected={selected}
+      className={`w-full flex items-center gap-2.5 px-4 py-2 text-sm text-left transition-colors ${
+        selected
+          ? "bg-green-50 dark:bg-green-950/40 text-[#0A5C2E] dark:text-[#1EB55E] font-semibold"
+          : `text-gray-700 dark:text-gray-200 hover:bg-green-50 dark:hover:bg-green-950/40 hover:text-[#0A5C2E] dark:hover:text-[#1EB55E] ${
+              emphasis ? "font-medium" : ""
+            }`
+      }`}
+    >
+      <MapPin
+        className={`w-3.5 h-3.5 flex-shrink-0 ${
+          selected ? "text-[#0A5C2E] dark:text-[#1EB55E]" : "text-gray-400 dark:text-gray-500"
+        }`}
+      />
+      <span className="flex-1 truncate">{label}</span>
+      {selected && <Check className="w-4 h-4 flex-shrink-0 text-[#0A5C2E] dark:text-[#1EB55E]" />}
+    </button>
+  );
+}
+
 // ─── Component ───────────────────────────────────────────────────────────────
 
 export function Navbar() {
@@ -87,18 +115,19 @@ export function Navbar() {
   const [langOpen, setLangOpen] = useState(false);
   const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
   const [mobileLocationOpen, setMobileLocationOpen] = useState(false);
-  const [selectedLocation, setSelectedLocation] = useState("Mingora");
+  const { location: selectedLocation, setLocation } = useLocation();
 
   const servicesRef = useRef<HTMLDivElement>(null!);
   const locationRef = useRef<HTMLDivElement>(null!);
   const langRef = useRef<HTMLDivElement>(null!);
 
-  // Restore saved location
+  // Close location dropdown with Escape
   useEffect(() => {
-    if (typeof window === "undefined") return;
-    const saved = localStorage.getItem("kaamsaathi_location");
-    if (saved) setSelectedLocation(saved);
-  }, []);
+    if (!locationOpen) return;
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setLocationOpen(false);
+    document.addEventListener("keydown", onKey);
+    return () => document.removeEventListener("keydown", onKey);
+  }, [locationOpen]);
 
   // Scroll shadow
   useEffect(() => {
@@ -117,9 +146,8 @@ export function Navbar() {
   useOutsideClick([locationRef], useCallback(() => setLocationOpen(false), []));
   useOutsideClick([langRef], useCallback(() => setLangOpen(false), []));
 
-  const handleLocationSelect = (loc: string) => {
-    setSelectedLocation(loc);
-    localStorage.setItem("kaamsaathi_location", loc);
+  const handleLocationSelect = (loc: SelectedLocation) => {
+    setLocation(loc);
     setLocationOpen(false);
     setMobileLocationOpen(false);
     setMobileOpen(false);
@@ -227,39 +255,44 @@ export function Navbar() {
               className="flex items-center gap-1.5 px-3 py-2 rounded-lg border border-gray-200 dark:border-[#345041] text-sm font-medium text-gray-700 dark:text-gray-200 hover:border-[#0A5C2E] dark:hover:border-[#1EB55E] hover:text-[#0A5C2E] dark:hover:text-[#1EB55E] transition-colors"
               aria-expanded={locationOpen}
               aria-haspopup="listbox"
+              aria-label={`Service location: ${selectedLocation}`}
             >
               <MapPin className="w-4 h-4 text-[#0A5C2E] dark:text-[#1EB55E] flex-shrink-0" />
-              <span>{selectedLocation}</span>
+              <span className="max-w-[8.5rem] truncate">{selectedLocation}</span>
               <ChevronDown
                 className={`w-3.5 h-3.5 text-gray-500 transition-transform duration-200 ${locationOpen ? "rotate-180" : ""}`}
               />
             </button>
 
             {locationOpen && (
-              <div
-                className="absolute top-full right-0 mt-2.5 w-44 bg-white dark:bg-[#111F18] rounded-xl border border-gray-100 dark:border-[#24382E] shadow-lg overflow-hidden z-50"
-                role="listbox"
-              >
-                <div className="px-3 py-2 border-b border-gray-100 dark:border-[#24382E]">
+              <div className="absolute top-full right-0 mt-2.5 w-60 bg-white dark:bg-[#111F18] rounded-xl border border-gray-100 dark:border-[#24382E] shadow-lg overflow-hidden z-50">
+                <div className="px-4 py-2.5 border-b border-gray-100 dark:border-[#24382E]">
                   <span className="text-[11px] font-semibold uppercase tracking-wider text-gray-400 dark:text-gray-500">
-                    Select City
+                    Select Area in Swat
                   </span>
                 </div>
-                <div className="py-1 max-h-56 overflow-y-auto">
-                  {LOCATIONS.map((loc) => (
-                    <button
+
+                <div
+                  role="listbox"
+                  aria-label="Swat areas"
+                  className="max-h-[min(22rem,calc(100vh-8rem))] overflow-y-auto overscroll-contain py-1"
+                >
+                  {/* Whole district (default region, not one of the 12 areas) */}
+                  <LocationOption
+                    label={`All ${DEFAULT_REGION}`}
+                    selected={selectedLocation === DEFAULT_REGION}
+                    onSelect={() => handleLocationSelect(DEFAULT_REGION)}
+                    emphasis
+                  />
+                  <div className="my-1 mx-4 h-px bg-gray-100 dark:bg-[#24382E]" />
+
+                  {SWAT_AREAS.map((loc) => (
+                    <LocationOption
                       key={loc}
-                      onClick={() => handleLocationSelect(loc)}
-                      role="option"
-                      aria-selected={selectedLocation === loc}
-                      className={`w-full text-left px-4 py-2 text-sm transition-colors ${
-                        selectedLocation === loc
-                          ? "bg-green-50 dark:bg-green-950/40 text-[#0A5C2E] dark:text-[#1EB55E] font-semibold"
-                          : "text-gray-700 dark:text-gray-200 hover:bg-green-50 dark:hover:bg-green-950/40 hover:text-[#0A5C2E] dark:hover:text-[#1EB55E]"
-                      }`}
-                    >
-                      {loc}
-                    </button>
+                      label={loc}
+                      selected={selectedLocation === loc}
+                      onSelect={() => handleLocationSelect(loc)}
+                    />
                   ))}
                 </div>
               </div>
@@ -361,7 +394,7 @@ export function Navbar() {
 
       {/* ── MOBILE DRAWER ─────────────────────────────────────────────────── */}
       {mobileOpen && (
-        <div className="lg:hidden border-t border-gray-100 dark:border-[#24382E] bg-white dark:bg-[#111F18] shadow-lg">
+        <div className="lg:hidden border-t border-gray-100 dark:border-[#24382E] bg-white dark:bg-[#111F18] shadow-lg max-h-[calc(100vh-68px)] overflow-y-auto overscroll-contain">
           <div className="px-4 py-4 space-y-1">
 
             {/* Home */}
@@ -462,22 +495,31 @@ export function Navbar() {
               </button>
 
               {mobileLocationOpen && (
-                <div className="mt-1 ml-4 pl-3 border-l-2 border-green-100 dark:border-green-900/60">
-                  <div className="grid grid-cols-2 gap-x-4 gap-y-1 py-1">
-                    {LOCATIONS.map((loc) => (
+                <div className="mt-1.5 px-1 pb-1 grid grid-cols-2 gap-1.5" role="listbox" aria-label="Swat areas">
+                  {(
+                    [DEFAULT_REGION, ...SWAT_AREAS] as SelectedLocation[]
+                  ).map((loc) => {
+                    const selected = selectedLocation === loc;
+                    const isRegion = loc === DEFAULT_REGION;
+                    return (
                       <button
                         key={loc}
                         onClick={() => handleLocationSelect(loc)}
-                        className={`text-left py-1.5 text-sm transition-colors ${
-                          selectedLocation === loc
-                            ? "text-[#0A5C2E] dark:text-[#1EB55E] font-semibold"
-                            : "text-gray-600 dark:text-gray-300 hover:text-[#0A5C2E] dark:hover:text-[#1EB55E]"
+                        role="option"
+                        aria-selected={selected}
+                        className={`${
+                          isRegion ? "col-span-2" : ""
+                        } min-w-0 flex items-center gap-1.5 px-3 py-2 rounded-lg border text-sm text-left transition-colors ${
+                          selected
+                            ? "border-[#0A5C2E] dark:border-[#1EB55E] bg-green-50 dark:bg-green-950/40 text-[#0A5C2E] dark:text-[#1EB55E] font-semibold"
+                            : "border-gray-200 dark:border-[#345041] text-gray-600 dark:text-gray-300 hover:border-[#0A5C2E] dark:hover:border-[#1EB55E] hover:text-[#0A5C2E] dark:hover:text-[#1EB55E]"
                         }`}
                       >
-                        {loc}
+                        <MapPin className="w-3.5 h-3.5 flex-shrink-0 text-[#0A5C2E] dark:text-[#1EB55E]" />
+                        <span className="truncate">{isRegion ? `All ${DEFAULT_REGION}` : loc}</span>
                       </button>
-                    ))}
-                  </div>
+                    );
+                  })}
                 </div>
               )}
             </div>

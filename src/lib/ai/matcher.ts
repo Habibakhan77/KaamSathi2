@@ -1,4 +1,5 @@
 import { ProviderProfile } from "../types";
+import { isSameArea } from "../location/swat-areas";
 
 export interface ProviderMatchResult {
   provider: ProviderProfile;
@@ -41,9 +42,7 @@ export function rankProviders(
     }
 
     // 2. Area proximity
-    const servesArea = p.serviceAreas.some(
-      (a) => a.toLowerCase() === location.toLowerCase()
-    );
+    const servesArea = p.serviceAreas.some((a) => isSameArea(a, location));
     if (servesArea) {
       score += 15;
       distanceTier = "exact_area";

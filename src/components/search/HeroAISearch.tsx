@@ -26,6 +26,7 @@ import {
   CornerDownLeft,
 } from "lucide-react";
 import { useLanguage } from "@/lib/i18n/LanguageContext";
+import { useLocation } from "@/lib/location/LocationContext";
 import { AIParseResponse } from "@/lib/ai/nlp-parser";
 import { ProviderMatchResult } from "@/lib/ai/matcher";
 
@@ -52,6 +53,7 @@ const SUPPORTED_LANGUAGES = ["English", "اردو", "پښتو", "Roman Urdu"];
 
 export function HeroAISearch() {
   const { t, language, isRTL } = useLanguage();
+  const { location: selectedLocation } = useLocation();
   const [query, setQuery] = useState("");
   const [isListening, setIsListening] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -120,7 +122,7 @@ export function HeroAISearch() {
       const parseRes = await fetch("/api/ai/parse", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ query: q, language }),
+        body: JSON.stringify({ query: q, language, fallbackLocation: selectedLocation }),
       });
       const parsedData: AIParseResponse = await parseRes.json();
       setParseResult(parsedData);

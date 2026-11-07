@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "@/styles/globals.css";
 import { LanguageProvider } from "@/lib/i18n/LanguageContext";
+import { LocationProvider } from "@/lib/location/LocationContext";
 import { TopContactBar } from "@/components/layout/TopContactBar";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
@@ -54,6 +55,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className="antialiased selection:bg-emerald-700 selection:text-white">
         <LanguageProvider>
+          <LocationProvider>
           <div className="flex flex-col min-h-screen">
             {/* Slim Top Contact Bar */}
             <TopContactBar />
@@ -65,6 +67,7 @@ export default function RootLayout({
             <FloatingWhatsApp />
             <FloatingAIAssistant />
           </div>
+          </LocationProvider>
         </LanguageProvider>
       </body>
     </html>
