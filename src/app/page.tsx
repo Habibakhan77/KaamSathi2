@@ -26,6 +26,8 @@ import {
 } from "lucide-react";
 import { useLanguage } from "@/lib/i18n/LanguageContext";
 import { HeroAISearch } from "@/components/search/HeroAISearch";
+import { HeroCarousel } from "@/components/hero/HeroCarousel";
+import { HERO_SLIDES, HERO_TRUST_POINTS } from "@/config/heroSlides";
 
 export default function HomePage() {
   const { t } = useLanguage();
@@ -176,51 +178,54 @@ export default function HomePage() {
 
   return (
     <div className="space-y-20 pb-16">
-      {/* Hero Section */}
-      <section className="relative overflow-hidden pt-8 pb-16 md:pt-16 md:pb-24 border-b border-[#D8E4DC] dark:border-[#24382E]">
-        {/* Subtle Swat Mountain Outline Layer with Solid Scrim (Never obscures text) */}
-        <div
-          aria-hidden="true"
-          className="absolute inset-0 pointer-events-none opacity-[0.06] dark:opacity-[0.10] flex items-end justify-center"
-        >
-          <svg
-            viewBox="0 0 1440 320"
-            className="w-full h-auto text-[#0A5C2E] dark:text-[#1EB55E]"
-            fill="currentColor"
-            preserveAspectRatio="none"
-          >
-            <path d="M0,192L60,176C120,160,240,128,360,144C480,160,600,224,720,218.7C840,213,960,139,1080,128C1200,117,1320,171,1380,197.3L1440,224L1440,320L1380,320C1320,320,1200,320,1080,320C960,320,840,320,720,320C600,320,480,320,360,320C240,320,120,320,60,320L0,320Z" />
-          </svg>
-        </div>
+      {/* Hero Section: banner carousel (content lives in src/config/heroSlides.ts) */}
+      <section aria-labelledby="home-hero-title" className="relative">
+        <HeroCarousel slides={HERO_SLIDES} trustPoints={HERO_TRUST_POINTS} overlapBottom />
 
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6">
-          {/* Badge */}
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-emerald-50 dark:bg-emerald-950/70 border border-emerald-200 dark:border-emerald-800 text-xs font-bold text-[#0A5C2E] dark:text-[#1EB55E] shadow-sm">
-            <Sparkles className="w-4 h-4 text-amber-500 fill-amber-500" />
-            <span>AI-Assisted Verified Services • Swat Valley Pilot</span>
-          </div>
+        {/* AI search card overlapping the banner */}
+        <div className="relative z-20 mx-auto mt-2 max-w-5xl px-4 sm:px-6 md:-mt-14 lg:px-8">
+          <div className="relative overflow-hidden rounded-3xl border border-[#D8E4DC] bg-white p-5 shadow-elevated sm:p-8 dark:border-[#24382E] dark:bg-[#111F18]">
+            {/* Subtle Swat mountain outline */}
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute inset-0 flex items-end justify-center opacity-[0.05] dark:opacity-[0.10]"
+            >
+              <svg
+                viewBox="0 0 1440 320"
+                className="h-auto w-full text-[#0F5C4D] dark:text-[#1EB55E]"
+                fill="currentColor"
+                preserveAspectRatio="none"
+              >
+                <path d="M0,192L60,176C120,160,240,128,360,144C480,160,600,224,720,218.7C840,213,960,139,1080,128C1200,117,1320,171,1380,197.3L1440,224L1440,320L1380,320C1320,320,1200,320,1080,320C960,320,840,320,720,320C600,320,480,320,360,320C240,320,120,320,60,320L0,320Z" />
+              </svg>
+            </div>
 
-          {/* Main Headline */}
-          <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-[#151515] dark:text-[#F2F7F4] max-w-4xl mx-auto leading-tight">
-            {t.hero.title}{" "}
-            <span className="text-[#0A5C2E] dark:text-[#1EB55E] underline decoration-emerald-300 dark:decoration-emerald-700 decoration-wavy underline-offset-8">
-              {t.hero.highlight}
-            </span>
-          </h1>
+            <div className="relative space-y-3 text-center">
+              <div className="inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-4 py-1.5 text-xs font-bold text-[#0F5C4D] shadow-sm dark:border-emerald-800 dark:bg-emerald-950/70 dark:text-[#1EB55E]">
+                <Sparkles className="h-4 w-4 fill-amber-500 text-amber-500" />
+                <span>AI-Assisted Verified Services • Swat Valley Pilot</span>
+              </div>
 
-          {/* Subtitle */}
-          <p className="max-w-2xl mx-auto text-base sm:text-lg text-[#3E4F47] dark:text-[#B8C9C0] leading-relaxed">
-            {t.hero.subtitle}
-          </p>
+              <h1
+                id="home-hero-title"
+                className="mx-auto max-w-3xl text-2xl font-extrabold leading-tight tracking-tight text-[#151515] sm:text-3xl lg:text-4xl dark:text-[#F2F7F4]"
+              >
+                {t.hero.title}{" "}
+                <span className="text-[#0F5C4D] dark:text-[#1EB55E]">{t.hero.highlight}</span>
+              </h1>
 
-          {/* Tagline */}
-          <div className="text-xs sm:text-sm font-extrabold text-[#0A5C2E] dark:text-[#1EB55E] tracking-wide uppercase">
-            &ldquo;{t.brand.tagline}&rdquo;
-          </div>
+              <p className="mx-auto max-w-2xl text-sm leading-relaxed text-[#3E4F47] sm:text-base dark:text-[#B8C9C0]">
+                {t.hero.subtitle}
+              </p>
 
-          {/* AI Search Bar Widget */}
-          <div className="pt-4">
-            <HeroAISearch />
+              <div className="text-xs font-extrabold uppercase tracking-wide text-[#0F5C4D] sm:text-sm dark:text-[#1EB55E]">
+                &ldquo;{t.brand.tagline}&rdquo;
+              </div>
+            </div>
+
+            <div className="relative pt-5">
+              <HeroAISearch />
+            </div>
           </div>
         </div>
       </section>
