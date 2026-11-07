@@ -14,11 +14,17 @@ import {
   SlidersHorizontal,
 } from "lucide-react";
 import { ProviderProfile } from "@/lib/types";
+import { useLocation } from "@/lib/location/LocationContext";
+import { DEFAULT_REGION, SWAT_AREAS, isSameArea, isSwatArea } from "@/lib/location/swat-areas";
 
 export default function ServicesPage() {
   const [providers, setProviders] = useState<ProviderProfile[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
-  const [selectedArea, setSelectedArea] = useState<string>("all");
+  // Area filter is driven by the global navbar location ("Swat" = all areas).
+  const { location, setLocation } = useLocation();
+  const selectedArea = location === DEFAULT_REGION ? "all" : location;
+  const setSelectedArea = (area: string) =>
+    setLocation(isSwatArea(area) ? area : DEFAULT_REGION);
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [minRating, setMinRating] = useState<number>(0);
   const [onlyVerified, setOnlyVerified] = useState<boolean>(true);
@@ -58,21 +64,11 @@ export default function ServicesPage() {
     { id: "appliance", name: "Appliance Repair" },
   ];
 
-  const swatAreas = [
-    "all",
-    "Mingora",
-    "Saidu Sharif",
-    "Kanju",
-    "Barikot",
-    "Madyan",
-    "Fizagat",
-  ];
-
   const filtered = providers.filter((p) => {
     if (selectedCategory !== "all" && p.category !== selectedCategory) return false;
     if (
       selectedArea !== "all" &&
-      !p.serviceAreas.some((a) => a.toLowerCase() === selectedArea.toLowerCase())
+      !p.serviceAreas.some((a) => isSameArea(a, selectedArea))
     )
       return false;
     if (p.rating < minRating) return false;
@@ -142,13 +138,11 @@ export default function ServicesPage() {
               className="px-3 py-2 rounded-xl border border-[#D8E4DC] dark:border-[#24382E] bg-white dark:bg-[#111F18] text-xs font-semibold text-[#151515] dark:text-[#F2F7F4] focus:outline-none"
             >
               <option value="all">All Swat Areas</option>
-              {swatAreas
-                .filter((a) => a !== "all")
-                .map((a) => (
-                  <option key={a} value={a}>
-                    {a}
-                  </option>
-                ))}
+              {SWAT_AREAS.map((a) => (
+                <option key={a} value={a}>
+                  {a}
+                </option>
+              ))}
             </select>
 
             <button

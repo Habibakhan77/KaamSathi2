@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/db";
+import { isSameArea, isWholeRegion } from "@/lib/location/swat-areas";
 
 export async function GET(req: NextRequest) {
   try {
@@ -24,9 +25,9 @@ export async function GET(req: NextRequest) {
       );
     }
 
-    if (area) {
+    if (area && !isWholeRegion(area)) {
       providers = providers.filter((p) =>
-        p.serviceAreas.some((a) => a.toLowerCase() === area.toLowerCase())
+        p.serviceAreas.some((a) => isSameArea(a, area))
       );
     }
 

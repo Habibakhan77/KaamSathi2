@@ -37,14 +37,14 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const { query, language } = validation.data;
+    const { query, language, fallbackLocation } = validation.data;
     // Sanitize string (strip script tags, excessive punctuation)
     const sanitizedQuery = query
       .replace(/<[^>]*>?/gm, "")
       .replace(/[$`\\]/g, "")
       .trim();
 
-    const parsedResult = await parseServiceIntent(sanitizedQuery, language);
+    const parsedResult = await parseServiceIntent(sanitizedQuery, language, fallbackLocation);
 
     return NextResponse.json(parsedResult, { status: 200 });
   } catch (error: any) {
