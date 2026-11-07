@@ -184,7 +184,16 @@ export default function HomePage() {
 
         {/* AI search card overlapping the banner */}
         <div className="relative z-20 mx-auto mt-2 max-w-5xl px-4 sm:px-6 md:-mt-14 lg:px-8">
-          <div className="relative overflow-hidden rounded-3xl border border-[#D8E4DC] bg-white p-5 shadow-elevated sm:p-8 dark:border-[#24382E] dark:bg-[#111F18]">
+          <div className="relative overflow-hidden rounded-[28px] border border-[#DCE7E2] bg-white px-5 pb-6 pt-9 shadow-[0_30px_70px_-30px_rgba(6,48,42,0.35)] sm:px-10 sm:pb-8 sm:pt-11 dark:border-[#24382E] dark:bg-[#111F18]">
+            {/* Brand hairline + soft top glow */}
+            <div
+              aria-hidden="true"
+              className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-[#0F5C4D] via-[#1FA971] to-[#F5A524]"
+            />
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute -top-28 left-1/2 h-56 w-[40rem] max-w-full -translate-x-1/2 rounded-full bg-[#1FA971]/10 blur-3xl"
+            />
             {/* Subtle Swat mountain outline */}
             <div
               aria-hidden="true"
@@ -200,30 +209,50 @@ export default function HomePage() {
               </svg>
             </div>
 
-            <div className="relative space-y-3 text-center">
-              <div className="inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-4 py-1.5 text-xs font-bold text-[#0F5C4D] shadow-sm dark:border-emerald-800 dark:bg-emerald-950/70 dark:text-[#1EB55E]">
-                <Sparkles className="h-4 w-4 fill-amber-500 text-amber-500" />
-                <span>AI-Assisted Verified Services • Swat Valley Pilot</span>
+            <div className="relative text-center">
+              {/* Eyebrow */}
+              <div className="inline-flex flex-wrap items-center justify-center gap-x-2.5 gap-y-1 rounded-full border border-[#0F5C4D]/10 bg-[#F4F8F7] px-4 py-1.5 text-xs font-bold text-[#0F5C4D] shadow-[0_1px_2px_rgba(15,92,77,0.06)] dark:border-[#1FA971]/25 dark:bg-[#1FA971]/10 dark:text-[#7FE3B5]">
+                <span className="inline-flex items-center gap-1.5">
+                  <Sparkles className="h-3.5 w-3.5 fill-[#F5A524] text-[#F5A524]" />
+                  AI-Assisted Verified Services
+                </span>
+                <span aria-hidden="true" className="hidden h-3 w-px bg-[#0F5C4D]/20 sm:block dark:bg-white/20" />
+                <span className="inline-flex items-center gap-1.5 text-[#3A524C] dark:text-[#B5CBC3]">
+                  <span className="relative flex h-2 w-2">
+                    <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#1FA971] opacity-60" />
+                    <span className="relative inline-flex h-2 w-2 rounded-full bg-[#1FA971]" />
+                  </span>
+                  Swat Valley Pilot
+                </span>
               </div>
 
+              {/* Headline */}
               <h1
                 id="home-hero-title"
-                className="mx-auto max-w-3xl text-2xl font-extrabold leading-tight tracking-tight text-[#151515] sm:text-3xl lg:text-4xl dark:text-[#F2F7F4]"
+                className="mx-auto mt-5 max-w-3xl font-heading text-[28px] font-extrabold leading-[1.12] tracking-tight text-[#0B2E27] sm:text-4xl lg:text-[44px] dark:text-[#F2F7F4]"
               >
                 {t.hero.title}{" "}
-                <span className="text-[#0F5C4D] dark:text-[#1EB55E]">{t.hero.highlight}</span>
+                <span className="bg-gradient-to-r from-[#0F5C4D] via-[#168A5F] to-[#0F5C4D] bg-clip-text pb-[0.12em] text-transparent [-webkit-box-decoration-break:clone] [box-decoration-break:clone] sm:block dark:from-[#5FD9A3] dark:via-[#9BEBC6] dark:to-[#5FD9A3]">
+                  {t.hero.highlight}
+                </span>
               </h1>
 
-              <p className="mx-auto max-w-2xl text-sm leading-relaxed text-[#3E4F47] sm:text-base dark:text-[#B8C9C0]">
+              {/* Subtitle */}
+              <p className="mx-auto mt-4 max-w-2xl text-[15px] leading-relaxed text-[#4A625C] sm:text-[17px] dark:text-[#B8C9C0]">
                 {t.hero.subtitle}
               </p>
 
-              <div className="text-xs font-extrabold uppercase tracking-wide text-[#0F5C4D] sm:text-sm dark:text-[#1EB55E]">
-                &ldquo;{t.brand.tagline}&rdquo;
+              {/* Tagline */}
+              <div className="mt-5 flex items-center justify-center gap-3">
+                <span aria-hidden="true" className="hidden h-px w-14 bg-gradient-to-r from-transparent to-[#F5A524] sm:block" />
+                <span className="text-[11px] font-bold uppercase tracking-[0.12em] text-[#0F5C4D] sm:text-xs sm:tracking-[0.18em] dark:text-[#7FE3B5]">
+                  {t.brand.tagline}
+                </span>
+                <span aria-hidden="true" className="hidden h-px w-14 bg-gradient-to-l from-transparent to-[#F5A524] sm:block" />
               </div>
             </div>
 
-            <div className="relative pt-5">
+            <div className="relative mt-8">
               <HeroAISearch />
             </div>
           </div>
@@ -231,64 +260,59 @@ export default function HomePage() {
       </section>
 
       {/* Trust Badges Bar */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          <div className="p-5 rounded-3xl bg-white dark:bg-[#111F18] border border-[#D8E4DC] dark:border-[#24382E] shadow-sm flex items-start gap-3.5">
-            <div className="w-10 h-10 rounded-2xl bg-emerald-100 dark:bg-emerald-950 text-[#0A5C2E] dark:text-[#1EB55E] flex items-center justify-center flex-shrink-0">
-              <ShieldCheck className="w-5 h-5" />
-            </div>
-            <div className="space-y-1">
-              <h4 className="font-heading font-bold text-sm text-[#151515] dark:text-[#F2F7F4]">
-                {t.trustBadges.verified}
-              </h4>
-              <p className="text-xs text-[#3E4F47] dark:text-[#B8C9C0] leading-snug">
-                {t.trustBadges.verifiedDesc}
-              </p>
-            </div>
-          </div>
-
-          <div className="p-5 rounded-3xl bg-white dark:bg-[#111F18] border border-[#D8E4DC] dark:border-[#24382E] shadow-sm flex items-start gap-3.5">
-            <div className="w-10 h-10 rounded-2xl bg-emerald-100 dark:bg-emerald-950 text-[#0A5C2E] dark:text-[#1EB55E] flex items-center justify-center flex-shrink-0">
-              <Sparkles className="w-5 h-5" />
-            </div>
-            <div className="space-y-1">
-              <h4 className="font-heading font-bold text-sm text-[#151515] dark:text-[#F2F7F4]">
-                {t.trustBadges.aiMatch}
-              </h4>
-              <p className="text-xs text-[#3E4F47] dark:text-[#B8C9C0] leading-snug">
-                {t.trustBadges.aiMatchDesc}
-              </p>
-            </div>
-          </div>
-
-          <div className="p-5 rounded-3xl bg-white dark:bg-[#111F18] border border-[#D8E4DC] dark:border-[#24382E] shadow-sm flex items-start gap-3.5">
-            <div className="w-10 h-10 rounded-2xl bg-emerald-100 dark:bg-emerald-950 text-[#0A5C2E] dark:text-[#1EB55E] flex items-center justify-center flex-shrink-0">
-              <MapPin className="w-5 h-5" />
-            </div>
-            <div className="space-y-1">
-              <h4 className="font-heading font-bold text-sm text-[#151515] dark:text-[#F2F7F4]">
-                {t.trustBadges.local}
-              </h4>
-              <p className="text-xs text-[#3E4F47] dark:text-[#B8C9C0] leading-snug">
-                {t.trustBadges.localDesc}
-              </p>
-            </div>
-          </div>
-
-          <div className="p-5 rounded-3xl bg-white dark:bg-[#111F18] border border-[#D8E4DC] dark:border-[#24382E] shadow-sm flex items-start gap-3.5">
-            <div className="w-10 h-10 rounded-2xl bg-emerald-100 dark:bg-emerald-950 text-[#0A5C2E] dark:text-[#1EB55E] flex items-center justify-center flex-shrink-0">
-              <CheckCircle2 className="w-5 h-5" />
-            </div>
-            <div className="space-y-1">
-              <h4 className="font-heading font-bold text-sm text-[#151515] dark:text-[#F2F7F4]">
-                {t.trustBadges.safe}
-              </h4>
-              <p className="text-xs text-[#3E4F47] dark:text-[#B8C9C0] leading-snug">
-                {t.trustBadges.safeDesc}
-              </p>
-            </div>
-          </div>
-        </div>
+      <section aria-label="Why choose KaamSaathi" className="mx-auto max-w-7xl px-4 !mt-12 sm:px-6 lg:px-8">
+        <ul className="grid overflow-hidden rounded-[28px] border border-[#DCE7E2] bg-white shadow-[0_24px_60px_-34px_rgba(6,48,42,0.35)] sm:grid-cols-2 lg:grid-cols-4 dark:border-[#24382E] dark:bg-[#111F18]">
+          {[
+            {
+              icon: ShieldCheck,
+              title: t.trustBadges.verified,
+              desc: t.trustBadges.verifiedDesc,
+              tile: "bg-gradient-to-br from-[#0F5C4D] to-[#1A7F66] text-white shadow-[0_10px_22px_-10px_rgba(15,92,77,0.8)]",
+              accent: "bg-[#0F5C4D] dark:bg-[#5FD9A3]",
+              border: "",
+            },
+            {
+              icon: Sparkles,
+              title: t.trustBadges.aiMatch,
+              desc: t.trustBadges.aiMatchDesc,
+              tile: "bg-gradient-to-br from-[#1FA971] to-[#3CC48A] text-white shadow-[0_10px_22px_-10px_rgba(31,169,113,0.8)]",
+              accent: "bg-[#1FA971]",
+              border: "border-t sm:border-t-0 sm:border-s",
+            },
+            {
+              icon: MapPin,
+              title: t.trustBadges.local,
+              desc: t.trustBadges.localDesc,
+              tile: "bg-gradient-to-br from-[#F5A524] to-[#F7BC55] text-[#3A2600] shadow-[0_10px_22px_-10px_rgba(245,165,36,0.8)]",
+              accent: "bg-[#F5A524]",
+              border: "border-t lg:border-t-0 lg:border-s",
+            },
+            {
+              icon: CheckCircle2,
+              title: t.trustBadges.safe,
+              desc: t.trustBadges.safeDesc,
+              tile: "bg-gradient-to-br from-[#0B4A3E] to-[#1FA971] text-white shadow-[0_10px_22px_-10px_rgba(15,92,77,0.8)]",
+              accent: "bg-gradient-to-r from-[#0F5C4D] to-[#1FA971]",
+              border: "border-t sm:border-s lg:border-t-0",
+            },
+          ].map(({ icon: Icon, title, desc, tile, accent, border }) => (
+            <li
+              key={title}
+              className={`relative border-[#E6EEEA] p-6 sm:p-7 dark:border-[#24382E] ${border}`}
+            >
+              <span aria-hidden="true" className={`absolute top-0 h-[3px] w-10 rounded-b-full start-6 sm:start-7 ${accent}`} />
+              <div className="flex items-start gap-4 lg:flex-col lg:gap-0">
+                <span className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl ${tile}`}>
+                  <Icon className="h-[22px] w-[22px]" aria-hidden="true" />
+                </span>
+                <div className="lg:mt-5">
+                  <h3 className="font-heading text-base font-bold text-[#0B2E27] dark:text-[#F2F7F4]">{title}</h3>
+                  <p className="mt-1.5 text-sm leading-relaxed text-[#4A625C] dark:text-[#B8C9C0]">{desc}</p>
+                </div>
+              </div>
+            </li>
+          ))}
+        </ul>
       </section>
 
       {/* Category Grid Section */}

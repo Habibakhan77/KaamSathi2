@@ -1,7 +1,8 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
+import type { LucideIcon } from "lucide-react";
 import {
   Search,
   Mic,
@@ -15,10 +16,39 @@ import {
   ShieldCheck,
   Star,
   Zap,
+  X,
+  Wind,
+  Droplets,
+  Hammer,
+  Sun,
+  TrendingUp,
+  Languages,
+  CornerDownLeft,
 } from "lucide-react";
 import { useLanguage } from "@/lib/i18n/LanguageContext";
 import { AIParseResponse } from "@/lib/ai/nlp-parser";
 import { ProviderMatchResult } from "@/lib/ai/matcher";
+
+/** Popular Swat problems. `query` is exactly what gets sent to the AI search. */
+const POPULAR_SEARCHES: { query: string; label: string; area: string; icon: LucideIcon }[] = [
+  {
+    query: "Mera AC theek se cool nahi kar raha, Mingora mein",
+    label: "Mera AC theek se cool nahi kar raha",
+    area: "Mingora",
+    icon: Wind,
+  },
+  { query: "Main breaker tripping, Saidu Sharif", label: "Main breaker tripping", area: "Saidu Sharif", icon: Zap },
+  {
+    query: "Concealed pipe leakage, Kanju Township",
+    label: "Concealed pipe leakage",
+    area: "Kanju Township",
+    icon: Droplets,
+  },
+  { query: "Door lock jammed, Barikot", label: "Door lock jammed", area: "Barikot", icon: Hammer },
+  { query: "Solar inverter calibration Swat", label: "Solar inverter calibration", area: "Swat", icon: Sun },
+];
+
+const SUPPORTED_LANGUAGES = ["English", "اردو", "پښتو", "Roman Urdu"];
 
 export function HeroAISearch() {
   const { t, language, isRTL } = useLanguage();
@@ -28,6 +58,8 @@ export function HeroAISearch() {
   const [parseResult, setParseResult] = useState<AIParseResponse | null>(null);
   const [matchedProviders, setMatchedProviders] = useState<ProviderMatchResult[]>([]);
   const [speechSupported, setSpeechSupported] = useState(false);
+  const [voiceNotice, setVoiceNotice] = useState<string | null>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   // Check Web Speech API support
   useEffect(() => {
@@ -38,9 +70,17 @@ export function HeroAISearch() {
     }
   }, []);
 
+  // Auto-dismiss the inline voice notice
+  useEffect(() => {
+    if (!voiceNotice) return;
+    const timer = window.setTimeout(() => setVoiceNotice(null), 5000);
+    return () => window.clearTimeout(timer);
+  }, [voiceNotice]);
+
   const handleVoiceInput = () => {
     if (!speechSupported) {
-      alert("Voice input is not supported in this browser. Please type your request.");
+      setVoiceNotice("Voice input is not supported in this browser. Please type your request.");
+      inputRef.current?.focus();
       return;
     }
 
@@ -110,70 +150,110 @@ export function HeroAISearch() {
     executeSearch(presetText);
   };
 
+  const isActive = isListening || isLoading;
+  const trendingLabel = t.hero.trending.replace(/[:：]\s*$/, "");
+
   return (
-    <div className="w-full max-w-4xl mx-auto space-y-4">
-      {/* Search Input Box */}
-      <div className="relative group rounded-3xl p-1.5 bg-gradient-to-r from-[#0A5C2E] via-[#0E7A3E] to-[#F5A524] shadow-elevated transition-all">
-        <div className="bg-white dark:bg-[#111F18] rounded-[22px] flex flex-col sm:flex-row items-center p-2 gap-2">
-          <div className="flex items-center flex-1 w-full px-3 gap-2.5">
-            <Sparkles className="w-5 h-5 text-[#0A5C2E] dark:text-[#1EB55E] flex-shrink-0 animate-pulse" />
-            <input
-              type="text"
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              onKeyDown={(e) => e.key === "Enter" && executeSearch()}
-              placeholder={t.hero.searchPlaceholder}
-              className="w-full bg-transparent border-none text-[#151515] dark:text-[#F2F7F4] placeholder-[#3E4F47]/70 dark:placeholder-[#B8C9C0]/70 text-sm md:text-base font-medium focus:outline-none py-2"
-              aria-label="Describe your problem or service requirement"
-            />
+    <div className="mx-auto w-full max-w-4xl">
+      {/* ── AI Search Bar ── */}
+      <div className="group relative">
+        {/* Brand glow ring (focus / listening / searching) */}
+        <div
+          aria-hidden="true"
+          className={`pointer-events-none absolute -inset-[3px] rounded-[27px] bg-gradient-to-r from-[#0F5C4D] via-[#1FA971] to-[#F5A524] transition-opacity duration-300 group-focus-within:opacity-100 ${
+            isActive ? "opacity-100" : "opacity-0"
+          }`}
+        />
+        <div
+          aria-hidden="true"
+          className={`pointer-events-none absolute -inset-3 rounded-[32px] bg-gradient-to-r from-[#1FA971]/25 via-[#1FA971]/10 to-[#F5A524]/25 blur-xl transition-opacity duration-300 group-focus-within:opacity-100 ${
+            isActive ? "opacity-100" : "opacity-0"
+          }`}
+        />
+
+        <div className="relative flex flex-col gap-2 rounded-3xl border border-[#D5E3DD] bg-white p-2 shadow-[0_20px_45px_-24px_rgba(15,92,77,0.45)] transition-colors group-focus-within:border-transparent sm:flex-row sm:items-center dark:border-[#26413A] dark:bg-[#0F1F1A]">
+          {/* Input area */}
+          <div className="flex min-w-0 flex-1 items-center gap-3 px-1.5 sm:px-2">
+            <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-[#0F5C4D] to-[#1FA971] text-white shadow-[0_8px_18px_-8px_rgba(15,92,77,0.8)]">
+              <Sparkles className={`h-5 w-5 ${isActive ? "animate-pulse" : ""}`} aria-hidden="true" />
+            </span>
+            <div className="flex min-w-0 flex-1 flex-col py-1">
+              <label
+                htmlFor="hero-ai-search-input"
+                className="text-[11px] font-bold uppercase tracking-[0.12em] text-[#0F5C4D] dark:text-[#5FD9A3]"
+              >
+                {isListening ? t.hero.listening : "Ask KaamSaathi AI"}
+              </label>
+              <input
+                ref={inputRef}
+                id="hero-ai-search-input"
+                type="text"
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                onKeyDown={(e) => e.key === "Enter" && executeSearch()}
+                placeholder={t.hero.searchPlaceholder}
+                className="w-full truncate border-none bg-transparent py-0.5 text-[15px] font-medium text-[#0B2E27] placeholder:text-[#7B918A] focus:outline-none focus-visible:outline-none sm:text-base dark:text-[#F2F7F4] dark:placeholder:text-[#7F978F]"
+                aria-label="Describe your problem or service requirement"
+                autoComplete="off"
+              />
+            </div>
             {query && (
               <button
+                type="button"
                 onClick={() => {
                   setQuery("");
                   setParseResult(null);
+                  inputRef.current?.focus();
                 }}
-                className="text-xs font-bold text-[#3E4F47] hover:text-[#151515] dark:text-[#B8C9C0] dark:hover:text-white px-2 py-1"
+                aria-label="Clear search"
+                title="Clear"
+                className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-[#5B736C] transition-colors hover:bg-[#0F5C4D]/10 hover:text-[#0B2E27] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1FA971] dark:text-[#9DB3AB] dark:hover:bg-white/10 dark:hover:text-white"
               >
-                Clear
+                <X className="h-4 w-4" aria-hidden="true" />
               </button>
             )}
           </div>
 
-          <div className="flex items-center gap-2 w-full sm:w-auto justify-end px-2 sm:px-0">
+          {/* Actions */}
+          <div className="flex items-center gap-2 border-t border-[#E6EEEA] pt-2 sm:border-t-0 sm:pt-0 dark:border-[#26413A]">
+            <span aria-hidden="true" className="hidden h-8 w-px bg-[#E1EBE6] sm:block dark:bg-[#26413A]" />
+
             {/* Voice Input Button */}
             <button
+              type="button"
               onClick={handleVoiceInput}
               title={speechSupported ? "Speak your problem" : "Speech not supported in browser"}
-              className={`p-3 rounded-2xl border transition-all flex items-center gap-1.5 text-xs font-bold ${
-                isListening
-                  ? "bg-red-500 text-white animate-bounce border-red-600"
-                  : "bg-emerald-50 dark:bg-emerald-950/50 border-[#D8E4DC] dark:border-[#24382E] text-[#0A5C2E] dark:text-[#1EB55E] hover:bg-emerald-100 dark:hover:bg-emerald-900/40"
-              }`}
               aria-label="Speak your problem"
+              aria-pressed={isListening}
+              className={`relative flex h-12 shrink-0 items-center justify-center gap-2 rounded-2xl px-4 text-sm font-bold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F5A524] ${
+                isListening
+                  ? "bg-red-500 text-white shadow-[0_8px_20px_-8px_rgba(239,68,68,0.8)]"
+                  : "bg-[#EEF7F3] text-[#0F5C4D] hover:bg-[#E0F1E9] dark:bg-[#1FA971]/10 dark:text-[#5FD9A3] dark:hover:bg-[#1FA971]/20"
+              }`}
             >
-              {isListening ? (
-                <>
-                  <MicOff className="w-4 h-4 text-white" />
-                  <span className="hidden sm:inline">Listening...</span>
-                </>
-              ) : (
-                <>
-                  <Mic className="w-4 h-4 text-[#0A5C2E] dark:text-[#1EB55E]" />
-                  <span className="hidden md:inline">Voice</span>
-                </>
+              {isListening && (
+                <span aria-hidden="true" className="absolute inset-0 animate-ping rounded-2xl bg-red-400/50" />
               )}
+              {isListening ? (
+                <MicOff className="relative h-4 w-4" aria-hidden="true" />
+              ) : (
+                <Mic className="relative h-4 w-4" aria-hidden="true" />
+              )}
+              <span className="relative hidden md:inline">{isListening ? "Listening…" : "Voice"}</span>
             </button>
 
             {/* AI Search CTA Button */}
             <button
+              type="button"
               onClick={() => executeSearch()}
               disabled={isLoading}
-              className="flex-1 sm:flex-initial px-6 py-3 rounded-2xl bg-[#0A5C2E] hover:bg-[#064A25] text-white font-bold text-sm shadow-md transition-all flex items-center justify-center gap-2 active:scale-95 disabled:opacity-50"
+              aria-busy={isLoading}
+              className="flex h-12 flex-1 items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-[#0F5C4D] to-[#13785F] px-6 text-sm font-bold text-white shadow-[0_12px_24px_-10px_rgba(15,92,77,0.85)] transition-all hover:-translate-y-0.5 hover:shadow-[0_16px_28px_-10px_rgba(15,92,77,0.9)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F5A524] focus-visible:ring-offset-2 active:translate-y-0 disabled:cursor-wait disabled:opacity-80 sm:flex-initial sm:px-7 sm:text-[15px] dark:from-[#1FA971] dark:to-[#28C083] dark:text-[#04241D]"
             >
               {isLoading ? (
-                <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                <span className="h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" aria-hidden="true" />
               ) : (
-                <Search className="w-4 h-4" />
+                <Search className="h-4 w-4" aria-hidden="true" />
               )}
               <span>{t.hero.searchBtn}</span>
             </button>
@@ -181,32 +261,79 @@ export function HeroAISearch() {
         </div>
       </div>
 
-      {/* Suggested Swat Problem Prompts */}
-      <div className="flex flex-wrap items-center gap-2 pt-1 text-xs">
-        <span className="font-bold text-[#151515] dark:text-[#F2F7F4] flex items-center gap-1">
-          <Zap className="w-3.5 h-3.5 text-[#F5A524]" />
-          {t.hero.trending}
+      {/* ── Helper row: languages / status / keyboard hint ── */}
+      <div className="mt-3 flex min-h-[28px] flex-wrap items-center justify-between gap-x-4 gap-y-2 px-1 text-xs" aria-live="polite">
+        {voiceNotice ? (
+          <span className="inline-flex items-center gap-1.5 font-semibold text-amber-700 dark:text-amber-300">
+            <AlertTriangle className="h-3.5 w-3.5" aria-hidden="true" />
+            {voiceNotice}
+          </span>
+        ) : isLoading ? (
+          <span className="inline-flex items-center gap-2 font-semibold text-[#0F5C4D] dark:text-[#5FD9A3]">
+            <span className="flex gap-1" aria-hidden="true">
+              <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-[#1FA971] [animation-delay:-0.3s]" />
+              <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-[#1FA971] [animation-delay:-0.15s]" />
+              <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-[#F5A524]" />
+            </span>
+            Analysing your problem and matching verified ustads…
+          </span>
+        ) : (
+          <span className="inline-flex flex-wrap items-center gap-1.5 text-[#5B736C] dark:text-[#9DB3AB]">
+            <Languages className="h-3.5 w-3.5 text-[#1FA971]" aria-hidden="true" />
+            <span className="font-medium">Understands</span>
+            {SUPPORTED_LANGUAGES.map((lang) => (
+              <span
+                key={lang}
+                className="rounded-md bg-[#0F5C4D]/[0.06] px-1.5 py-0.5 font-semibold text-[#0F5C4D] dark:bg-white/5 dark:text-[#B5CBC3]"
+              >
+                {lang}
+              </span>
+            ))}
+          </span>
+        )}
+        <span className="hidden items-center gap-1.5 text-[#7B918A] sm:inline-flex dark:text-[#7F978F]">
+          Press
+          <kbd className="inline-flex items-center gap-1 rounded-md border border-[#D5E3DD] bg-white px-1.5 py-0.5 font-sans text-[11px] font-semibold text-[#3A524C] shadow-[0_1px_0_#D5E3DD] dark:border-[#26413A] dark:bg-[#0F1F1A] dark:text-[#B5CBC3] dark:shadow-none">
+            Enter
+            <CornerDownLeft className={`h-3 w-3 ${isRTL ? "-scale-x-100" : ""}`} aria-hidden="true" />
+          </kbd>
+          to search
         </span>
-        {[
-          "Mera AC theek se cool nahi kar raha, Mingora mein",
-          "Main breaker tripping, Saidu Sharif",
-          "Concealed pipe leakage, Kanju Township",
-          "Door lock jammed, Barikot",
-          "Solar inverter calibration Swat",
-        ].map((item) => (
-          <button
-            key={item}
-            onClick={() => handlePresetClick(item)}
-            className="px-3 py-1 rounded-full border border-[#D8E4DC] dark:border-[#24382E] bg-white dark:bg-[#111F18] text-[#3E4F47] dark:text-[#B8C9C0] hover:text-[#0A5C2E] dark:hover:text-[#1EB55E] hover:border-emerald-500 text-[11px] font-medium transition-colors"
-          >
-            {item}
-          </button>
-        ))}
+      </div>
+
+      {/* ── Popular searches ── */}
+      <div className="mt-6 border-t border-dashed border-[#DCE7E2] pt-5 dark:border-[#26413A]">
+        <div className="mb-3 flex items-center justify-center gap-2 text-[11px] font-bold uppercase tracking-[0.14em] text-[#3A524C] dark:text-[#B5CBC3]">
+          <TrendingUp className="h-3.5 w-3.5 text-[#F5A524]" aria-hidden="true" />
+          {trendingLabel}
+        </div>
+        <ul className="-mx-5 flex snap-x gap-2 overflow-x-auto px-5 pb-2 pt-1 [scrollbar-width:none] sm:mx-0 sm:flex-wrap sm:justify-center sm:overflow-visible sm:px-0 [&::-webkit-scrollbar]:hidden [mask-image:linear-gradient(to_right,transparent,black_20px,black_calc(100%-20px),transparent)] sm:[mask-image:none]">
+          {POPULAR_SEARCHES.map(({ query: preset, label, area, icon: Icon }) => (
+            <li key={preset} className="shrink-0 snap-start">
+              <button
+                type="button"
+                onClick={() => handlePresetClick(preset)}
+                disabled={isLoading}
+                title={preset}
+                className="group/chip inline-flex items-center gap-2 rounded-full border border-[#DCE7E2] bg-white py-1.5 pe-3.5 ps-1.5 text-[13px] font-medium text-[#2F4A44] shadow-[0_1px_2px_rgba(15,92,77,0.06)] transition-all hover:-translate-y-0.5 hover:border-[#1FA971]/60 hover:shadow-[0_8px_18px_-10px_rgba(15,92,77,0.5)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1FA971] disabled:pointer-events-none disabled:opacity-60 dark:border-[#26413A] dark:bg-[#0F1F1A] dark:text-[#D3E2DC]"
+              >
+                <span className="flex h-6 w-6 items-center justify-center rounded-full bg-[#EAF6F0] text-[#0F5C4D] transition-colors group-hover/chip:bg-[#0F5C4D] group-hover/chip:text-white dark:bg-[#1FA971]/15 dark:text-[#5FD9A3]">
+                  <Icon className="h-3.5 w-3.5" aria-hidden="true" />
+                </span>
+                <span className="whitespace-nowrap">{label}</span>
+                <span className="inline-flex items-center gap-0.5 whitespace-nowrap text-[12px] text-[#7B918A] dark:text-[#7F978F]">
+                  <MapPin className="h-3 w-3" aria-hidden="true" />
+                  {area}
+                </span>
+              </button>
+            </li>
+          ))}
+        </ul>
       </div>
 
       {/* Dynamic AI Diagnosis & Matched Providers Result Card */}
       {parseResult && (
-        <div className="mt-6 rounded-3xl border border-[#D8E4DC] dark:border-[#24382E] bg-white dark:bg-[#111F18] shadow-card p-6 space-y-6 animate-fadeIn">
+        <div className="mt-6 rounded-3xl border border-[#D8E4DC] dark:border-[#24382E] bg-white dark:bg-[#111F18] shadow-card p-6 space-y-6 animate-[ks-fade-up_0.45s_ease-out]">
           {/* Header with confidence & diagnosis badges */}
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 border-b border-[#D8E4DC] dark:border-[#24382E] pb-4">
             <div className="flex items-center gap-3">
