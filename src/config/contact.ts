@@ -6,26 +6,67 @@
 export interface ContactConfig {
   phoneRaw: string;
   phoneDisplay: string;
+  whatsappUrl: string;
   email: string;
   linkedIn: string;
   facebookUrl: string;
-  facebookHandle: string;
-  tiktokUrl: string; // If empty, TikTok icon is not rendered
+  tiktokUrl: string;
   pilotNotice: string;
 }
 
 export const contactConfig: ContactConfig = {
-  // NOTE & TODO: The provided number '034444442012' has 12 digits, while standard Pakistani
-  // mobile numbers are 11 digits (03XX XXXXXXX). Kept exactly as provided.
-  phoneRaw: "034444442012",
-  phoneDisplay: "0344-44442012",
+  // Official helpline / WhatsApp complaints line: +92 344 4442012
+  phoneRaw: "03444442012",
+  phoneDisplay: "+92 344 4442012",
+  whatsappUrl: "https://wa.me/923444442012",
   email: "habibytes@gmail.com",
-  linkedIn: "https://www.linkedin.com/in/habiba-khan-011830375/",
-  facebookUrl: "https://www.facebook.com/Habibytes",
-  facebookHandle: "Habibytes",
-  tiktokUrl: "", // Kept empty until TikTok handle is provided; icon will hide automatically
+  linkedIn:
+    "https://www.linkedin.com/in/laiba-khaist-215311308?utm_source=share_via&utm_content=profile&utm_medium=member_ios",
+  facebookUrl: "https://www.facebook.com/share/1YV9AkdSa2/?mibextid=wwXIfr",
+  tiktokUrl: "https://www.tiktok.com/@laibakhgn?is_from_webapp=1&sender_device=pc",
   pilotNotice: "Pilot launching in Swat",
 };
+
+/**
+ * Official social links (header top bar, footer, contact page), in display order.
+ * URLs come from `contactConfig` above — edit them there only.
+ */
+export type SocialPlatform = "facebook" | "linkedin" | "whatsapp" | "tiktok";
+
+export interface SocialLink {
+  id: SocialPlatform;
+  label: string;
+  href: string;
+  ariaLabel: string;
+}
+
+export const SOCIAL_LINKS: readonly SocialLink[] = [
+  {
+    id: "facebook",
+    label: "Facebook",
+    href: contactConfig.facebookUrl,
+    ariaLabel: "KaamSaathi on Facebook (opens in a new tab)",
+  },
+  {
+    id: "linkedin",
+    label: "LinkedIn",
+    href: contactConfig.linkedIn,
+    ariaLabel: "KaamSaathi on LinkedIn (opens in a new tab)",
+  },
+  {
+    id: "whatsapp",
+    label: "WhatsApp",
+    // Complaints line: +92 344 4442012
+    href: contactConfig.whatsappUrl,
+    ariaLabel: "WhatsApp complaints chat, +92 344 4442012 (opens in a new tab)",
+  },
+  {
+    id: "tiktok",
+    label: "TikTok",
+    href: contactConfig.tiktokUrl,
+    ariaLabel: "KaamSaathi on TikTok (opens in a new tab)",
+  },
+];
 
 /**
  * Converts a Pakistani local phone number into an international wa.me WhatsApp URL.

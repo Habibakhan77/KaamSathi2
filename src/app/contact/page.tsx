@@ -8,11 +8,10 @@ import {
   Mail,
   Send,
   ExternalLink,
-  Linkedin,
-  Facebook,
   ShieldCheck,
 } from "lucide-react";
-import { contactConfig, getWhatsAppUrl } from "@/config/contact";
+import { SOCIAL_LINKS, contactConfig, getWhatsAppUrl } from "@/config/contact";
+import { SocialGlyph } from "@/components/brand/SocialIcons";
 
 export default function ContactPage() {
   const [name, setName] = useState("");
@@ -105,28 +104,21 @@ export default function ContactPage() {
           </div>
 
           {/* Social Profiles */}
-          <div className="pt-2 border-t border-[#D8E4DC] dark:border-[#24382E] flex items-center gap-3">
+          <div className="pt-2 border-t border-[#D8E4DC] dark:border-[#24382E] flex flex-wrap items-center gap-3">
             <span className="font-bold text-[#151515] dark:text-[#F2F7F4]">Profiles:</span>
-            <a
-              href={contactConfig.linkedIn}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="LinkedIn"
-              className="px-3 py-1.5 rounded-xl border border-[#D8E4DC] dark:border-[#24382E] text-xs font-semibold flex items-center gap-1.5 hover:text-[#0A5C2E] dark:hover:text-[#1EB55E]"
-            >
-              <Linkedin className="w-3.5 h-3.5" />
-              <span>LinkedIn</span>
-            </a>
-            <a
-              href={contactConfig.facebookUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Facebook"
-              className="px-3 py-1.5 rounded-xl border border-[#D8E4DC] dark:border-[#24382E] text-xs font-semibold flex items-center gap-1.5 hover:text-[#0A5C2E] dark:hover:text-[#1EB55E]"
-            >
-              <Facebook className="w-3.5 h-3.5" />
-              <span>{contactConfig.facebookHandle}</span>
-            </a>
+            {SOCIAL_LINKS.map((s) => (
+              <a
+                key={s.id}
+                href={s.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={s.ariaLabel}
+                className="px-3 py-1.5 rounded-xl border border-[#D8E4DC] dark:border-[#24382E] text-xs font-semibold flex items-center gap-1.5 hover:text-[#0A5C2E] dark:hover:text-[#1EB55E]"
+              >
+                <SocialGlyph platform={s.id} className="w-3.5 h-3.5" />
+                <span>{s.label}</span>
+              </a>
+            ))}
           </div>
 
           <div className="pt-2">
