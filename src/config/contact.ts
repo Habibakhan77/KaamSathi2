@@ -15,10 +15,10 @@ export interface ContactConfig {
 }
 
 export const contactConfig: ContactConfig = {
-  // Official helpline / WhatsApp complaints line: +92 344 4442012
-  phoneRaw: "03444442012",
-  phoneDisplay: "+92 344 4442012",
-  whatsappUrl: "https://wa.me/923444442012",
+  // Official helpline / WhatsApp line: +92 344 1850034
+  phoneRaw: "03441850034",
+  phoneDisplay: "+92 344 1850034",
+  whatsappUrl: "https://wa.me/923441850034",
   email: "habibytes@gmail.com",
   linkedIn:
     "https://www.linkedin.com/in/laiba-khaist-215311308?utm_source=share_via&utm_content=profile&utm_medium=member_ios",
@@ -56,9 +56,8 @@ export const SOCIAL_LINKS: readonly SocialLink[] = [
   {
     id: "whatsapp",
     label: "WhatsApp",
-    // Complaints line: +92 344 4442012
     href: contactConfig.whatsappUrl,
-    ariaLabel: "WhatsApp complaints chat, +92 344 4442012 (opens in a new tab)",
+    ariaLabel: `WhatsApp chat, ${contactConfig.phoneDisplay} (opens in a new tab)`,
   },
   {
     id: "tiktok",

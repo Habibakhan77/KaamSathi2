@@ -24,9 +24,11 @@ import {
   TrendingUp,
   Languages,
   CornerDownLeft,
+  ChevronDown,
 } from "lucide-react";
 import { useLanguage } from "@/lib/i18n/LanguageContext";
 import { useLocation } from "@/lib/location/LocationContext";
+import { DEFAULT_REGION, SWAT_AREAS, type SelectedLocation } from "@/lib/location/swat-areas";
 import { AIParseResponse } from "@/lib/ai/nlp-parser";
 import { ProviderMatchResult } from "@/lib/ai/matcher";
 
@@ -53,7 +55,7 @@ const SUPPORTED_LANGUAGES = ["English", "اردو", "پښتو", "Roman Urdu"];
 
 export function HeroAISearch() {
   const { t, language, isRTL } = useLanguage();
-  const { location: selectedLocation } = useLocation();
+  const { location: selectedLocation, setLocation } = useLocation();
   const [query, setQuery] = useState("");
   const [isListening, setIsListening] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -156,7 +158,7 @@ export function HeroAISearch() {
   const trendingLabel = t.hero.trending.replace(/[:：]\s*$/, "");
 
   return (
-    <div className="mx-auto w-full max-w-4xl">
+    <div className="mx-auto w-full max-w-6xl">
       {/* ── AI Search Bar ── */}
       <div className="group relative">
         {/* Brand glow ring (focus / listening / searching) */}
@@ -173,32 +175,37 @@ export function HeroAISearch() {
           }`}
         />
 
-        <div className="relative flex flex-col gap-2 rounded-3xl border border-[#D5E3DD] bg-white p-2 shadow-[0_20px_45px_-24px_rgba(15,92,77,0.45)] transition-colors group-focus-within:border-transparent sm:flex-row sm:items-center dark:border-[#26413A] dark:bg-[#0F1F1A]">
-          {/* Input area */}
-          <div className="flex min-w-0 flex-1 items-center gap-3 px-1.5 sm:px-2">
-            <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-[#0F5C4D] to-[#1FA971] text-white shadow-[0_8px_18px_-8px_rgba(15,92,77,0.8)]">
-              <Sparkles className={`h-5 w-5 ${isActive ? "animate-pulse" : ""}`} aria-hidden="true" />
-            </span>
-            <div className="flex min-w-0 flex-1 flex-col py-1">
-              <label
-                htmlFor="hero-ai-search-input"
-                className="text-[11px] font-bold uppercase tracking-[0.12em] text-[#0F5C4D] dark:text-[#5FD9A3]"
-              >
+        <div className="relative flex flex-col gap-2 rounded-[22px] border border-[#E2EBE6] bg-white p-2 shadow-[0_18px_40px_-24px_rgba(15,92,77,0.45)] transition-colors group-focus-within:border-transparent lg:flex-row lg:items-center dark:border-[#26413A] dark:bg-[#0F1F1A]">
+          {/* Input area: "Ask KaamSaathi AI" chip + search field */}
+          <div className="flex min-w-0 flex-1 items-center gap-2 sm:gap-3">
+            <label
+              htmlFor="hero-ai-search-input"
+              className={`inline-flex h-12 shrink-0 cursor-text items-center gap-2 rounded-2xl px-3 text-sm font-bold transition-colors sm:px-5 sm:text-[15px] ${
+                isListening
+                  ? "bg-red-50 text-red-600 dark:bg-red-500/10 dark:text-red-300"
+                  : "bg-[#EEF7F3] text-[#0F5C4D] dark:bg-[#1FA971]/10 dark:text-[#5FD9A3]"
+              }`}
+            >
+              <Sparkles className={`h-5 w-5 shrink-0 ${isActive ? "animate-pulse" : ""}`} aria-hidden="true" />
+              <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
                 {isListening ? t.hero.listening : "Ask KaamSaathi AI"}
-              </label>
-              <input
-                ref={inputRef}
-                id="hero-ai-search-input"
-                type="text"
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
-                onKeyDown={(e) => e.key === "Enter" && executeSearch()}
-                placeholder={t.hero.searchPlaceholder}
-                className="w-full truncate border-none bg-transparent py-0.5 text-[15px] font-medium text-[#0B2E27] placeholder:text-[#7B918A] focus:outline-none focus-visible:outline-none sm:text-base dark:text-[#F2F7F4] dark:placeholder:text-[#7F978F]"
-                aria-label="Describe your problem or service requirement"
-                autoComplete="off"
-              />
-            </div>
+              </span>
+            </label>
+            <span aria-hidden="true" className="hidden h-8 w-px shrink-0 bg-[#E1EBE6] sm:block dark:bg-[#26413A]" />
+            <Search className="hidden h-5 w-5 shrink-0 text-[#3A524C] sm:block dark:text-[#9DB3AB]" aria-hidden="true" />
+            <input
+              ref={inputRef}
+              id="hero-ai-search-input"
+              type="text"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              onKeyDown={(e) => e.key === "Enter" && executeSearch()}
+              placeholder={t.hero.searchPlaceholder}
+              title={t.hero.searchPlaceholder}
+              className="h-12 min-w-0 flex-1 truncate border-none bg-transparent text-[15px] font-medium text-[#0B2E27] placeholder:text-[#7B918A] focus:outline-none focus-visible:outline-none dark:text-[#F2F7F4] dark:placeholder:text-[#7F978F]"
+              aria-label="Describe your problem or service requirement"
+              autoComplete="off"
+            />
             {query && (
               <button
                 type="button"
@@ -216,9 +223,36 @@ export function HeroAISearch() {
             )}
           </div>
 
-          {/* Actions */}
-          <div className="flex items-center gap-2 border-t border-[#E6EEEA] pt-2 sm:border-t-0 sm:pt-0 dark:border-[#26413A]">
-            <span aria-hidden="true" className="hidden h-8 w-px bg-[#E1EBE6] sm:block dark:bg-[#26413A]" />
+          {/* Actions: location · voice · search */}
+          <div className="flex items-center gap-2 border-t border-[#E6EEEA] pt-2 lg:border-t-0 lg:pt-0 dark:border-[#26413A]">
+            <span aria-hidden="true" className="hidden h-8 w-px bg-[#E1EBE6] lg:block dark:bg-[#26413A]" />
+
+            {/* Swat location: shares the global navbar location (LocationContext) and feeds the AI search */}
+            <div className="relative min-w-0 flex-1 lg:flex-none">
+              <MapPin
+                className="pointer-events-none absolute start-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 fill-[#0F5C4D] text-white dark:fill-[#5FD9A3] dark:text-[#0F1F1A]"
+                aria-hidden="true"
+              />
+              <select
+                value={selectedLocation}
+                onChange={(e) => setLocation(e.target.value as SelectedLocation)}
+                aria-label="Service location in Swat"
+                className="h-12 w-full min-w-0 cursor-pointer appearance-none truncate rounded-2xl bg-transparent pe-8 ps-9 text-[15px] font-bold text-[#0B2E27] transition-colors hover:bg-[#F4F8F7] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1FA971] lg:w-auto lg:max-w-[190px] dark:text-[#F2F7F4] dark:hover:bg-white/5 [&>option]:text-[#0B2E27]"
+              >
+                <option value={DEFAULT_REGION}>{DEFAULT_REGION}</option>
+                {SWAT_AREAS.map((area) => (
+                  <option key={area} value={area}>
+                    {area}
+                  </option>
+                ))}
+              </select>
+              <ChevronDown
+                className="pointer-events-none absolute end-2.5 top-1/2 h-4 w-4 -translate-y-1/2 text-[#3A524C] dark:text-[#9DB3AB]"
+                aria-hidden="true"
+              />
+            </div>
+
+            <span aria-hidden="true" className="hidden h-8 w-px bg-[#E1EBE6] lg:block dark:bg-[#26413A]" />
 
             {/* Voice Input Button */}
             <button
@@ -241,7 +275,7 @@ export function HeroAISearch() {
               ) : (
                 <Mic className="relative h-4 w-4" aria-hidden="true" />
               )}
-              <span className="relative hidden md:inline">{isListening ? "Listening…" : "Voice"}</span>
+              <span className="relative hidden sm:inline">{isListening ? "Listening…" : "Voice"}</span>
             </button>
 
             {/* AI Search CTA Button */}

@@ -29,6 +29,14 @@ export interface TranslationDictionary {
     listening: string;
     trending: string;
   };
+  /** Marketplace discovery section directly below the homepage hero. */
+  discover: {
+    eyebrow: string;
+    title: string;
+    highlight: string;
+    subtitle: string;
+    popularTitle: string;
+  };
   trustBadges: {
     verified: string;
     verifiedDesc: string;
@@ -108,6 +116,14 @@ export const translations: Record<SupportedLanguage, TranslationDictionary> = {
       voiceBtn: "Voice Search",
       listening: "Listening to your voice...",
       trending: "Popular in Swat:",
+    },
+    discover: {
+      eyebrow: "Your Local Service Marketplace",
+      title: "Find the Right Professional for",
+      highlight: "Every Job.",
+      subtitle:
+        "Discover trusted, verified professionals across Swat. Quality services, transparent quotations.",
+      popularTitle: "Explore Popular Services",
     },
     trustBadges: {
       verified: "CNIC & Skill Verified",
@@ -190,6 +206,13 @@ export const translations: Record<SupportedLanguage, TranslationDictionary> = {
       listening: "آپ کی آواز سنی جا رہی ہے...",
       trending: "سوات میں مقبول خدمات:",
     },
+    discover: {
+      eyebrow: "آپ کی مقامی سروس مارکیٹ",
+      title: "ہر کام کے لیے",
+      highlight: "درست ماہر تلاش کریں۔",
+      subtitle: "پورے سوات میں قابلِ اعتماد اور تصدیق شدہ ماہرین تلاش کریں۔ معیاری خدمات، شفاف قیمتیں۔",
+      popularTitle: "مقبول خدمات دیکھیں",
+    },
     trustBadges: {
       verified: "شناختی کارڈ اور ہنر کی تصدیق",
       verifiedDesc: "ہر کاریگر نادرا شناختی کارڈ اور فنی مہارت کے معائنے سے گزرتا ہے۔",
@@ -271,6 +294,13 @@ export const translations: Record<SupportedLanguage, TranslationDictionary> = {
       listening: "ستاسو غږ اوریدل کیږي...",
       trending: "په سوات کې مشهور کارونه:",
     },
+    discover: {
+      eyebrow: "ستاسو محلي خدماتو بازار",
+      title: "د هر کار لپاره",
+      highlight: "سم ماهر ومومئ.",
+      subtitle: "په ټول سوات کې باوري او تصدیق شوي ماهران ومومئ. ښې خدمتونه، روښانه بیې.",
+      popularTitle: "مشهور خدمتونه وګورئ",
+    },
     trustBadges: {
       verified: "د تذکرې او هنر تصدیق",
       verifiedDesc: "هر استاد د نادرا شناختي کارډ او د مهارت تصدیق لري.",
@@ -351,6 +381,14 @@ export const translations: Record<SupportedLanguage, TranslationDictionary> = {
       voiceBtn: "Bolein",
       listening: "Aap ki aawaz suni ja rahi hai...",
       trending: "Swat mein maqbool services:",
+    },
+    discover: {
+      eyebrow: "Aap ki Local Service Marketplace",
+      title: "Har Kaam ke liye",
+      highlight: "Sahi Professional Dhoondein.",
+      subtitle:
+        "Poore Swat mein bharosemand, verified professionals talash karein. Behtareen services, transparent quotations.",
+      popularTitle: "Popular Services Dekhein",
     },
     trustBadges: {
       verified: "CNIC & Skill Verified",

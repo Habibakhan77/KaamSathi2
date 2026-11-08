@@ -23,11 +23,29 @@ import {
   Users,
   Clock,
   ExternalLink,
+  ShowerHead,
+  AirVent,
+  PaintRoller,
+  SprayCan,
+  WashingMachine,
 } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 import { useLanguage } from "@/lib/i18n/LanguageContext";
 import { HeroAISearch } from "@/components/search/HeroAISearch";
 import { HeroCarousel } from "@/components/hero/HeroCarousel";
 import { HERO_SLIDES, HERO_TRUST_POINTS } from "@/config/heroSlides";
+
+/** Discovery-section category cards. `id` matches the /services `?cat=` filter. */
+const POPULAR_SERVICES: { id: string; label: string; icon: LucideIcon }[] = [
+  { id: "electrician", label: "Electrician", icon: Zap },
+  { id: "plumber", label: "Plumbing", icon: ShowerHead },
+  { id: "ac-technician", label: "AC Repair", icon: AirVent },
+  { id: "carpenter", label: "Carpenter", icon: Hammer },
+  { id: "painter", label: "Painting", icon: PaintRoller },
+  { id: "cleaning", label: "Cleaning", icon: SprayCan },
+  { id: "appliance", label: "Home Appliances", icon: WashingMachine },
+  { id: "solar", label: "Solar & Inverter", icon: Sun },
+];
 
 export default function HomePage() {
   const { t } = useLanguage();
@@ -179,82 +197,92 @@ export default function HomePage() {
   return (
     <div className="space-y-20 pb-16">
       {/* Hero Section: banner carousel (content lives in src/config/heroSlides.ts) */}
-      <section aria-labelledby="home-hero-title" className="relative">
-        <HeroCarousel slides={HERO_SLIDES} trustPoints={HERO_TRUST_POINTS} overlapBottom />
+      <section aria-label="Featured services" className="relative">
+        <HeroCarousel slides={HERO_SLIDES} trustPoints={HERO_TRUST_POINTS} />
+      </section>
 
-        {/* AI search card overlapping the banner */}
-        <div className="relative z-20 mx-auto mt-2 max-w-5xl px-4 sm:px-6 md:-mt-14 lg:px-8">
-          <div className="relative overflow-hidden rounded-[28px] border border-[#DCE7E2] bg-white px-5 pb-6 pt-9 shadow-[0_30px_70px_-30px_rgba(6,48,42,0.35)] sm:px-10 sm:pb-8 sm:pt-11 dark:border-[#24382E] dark:bg-[#111F18]">
-            {/* Brand hairline + soft top glow */}
-            <div
-              aria-hidden="true"
-              className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-[#0F5C4D] via-[#1FA971] to-[#F5A524]"
-            />
-            <div
-              aria-hidden="true"
-              className="pointer-events-none absolute -top-28 left-1/2 h-56 w-[40rem] max-w-full -translate-x-1/2 rounded-full bg-[#1FA971]/10 blur-3xl"
-            />
-            {/* Subtle Swat mountain outline */}
-            <div
-              aria-hidden="true"
-              className="pointer-events-none absolute inset-0 flex items-end justify-center opacity-[0.05] dark:opacity-[0.10]"
+      {/* Marketplace Discovery: separate full-width section directly below the hero */}
+      <section
+        aria-labelledby="home-discover-title"
+        className="relative !mt-0 overflow-hidden bg-gradient-to-b from-[#F4F8F7] via-[#FBFAF4] to-[#F7FAF8] pb-6 pt-10 sm:pt-12 dark:from-[#0B1A16] dark:via-[#0D1A14] dark:to-[#0B1410]"
+      >
+        {/* Soft Swat-hill shapes on both edges */}
+        <div aria-hidden="true" className="pointer-events-none absolute inset-0">
+          <div className="absolute -left-40 top-10 h-72 w-[30rem] rounded-[50%] bg-[#1FA971]/[0.08] blur-2xl dark:bg-[#1FA971]/[0.06]" />
+          <div className="absolute -right-40 top-6 h-72 w-[30rem] rounded-[50%] bg-[#1FA971]/[0.08] blur-2xl dark:bg-[#1FA971]/[0.06]" />
+        </div>
+
+        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="text-center">
+            {/* Eyebrow */}
+            <span className="inline-flex items-center gap-1.5 rounded-full border border-[#0F5C4D]/25 bg-white px-3.5 py-1.5 text-[11px] font-bold uppercase tracking-[0.08em] text-[#0F5C4D] shadow-[0_1px_2px_rgba(15,92,77,0.06)] sm:text-xs dark:border-[#1FA971]/30 dark:bg-[#1FA971]/10 dark:text-[#7FE3B5]">
+              <ShieldCheck className="h-4 w-4 fill-[#0F5C4D] text-white dark:fill-[#5FD9A3] dark:text-[#0B1A16]" aria-hidden="true" />
+              {t.discover.eyebrow}
+            </span>
+
+            {/* Heading */}
+            <h1
+              id="home-discover-title"
+              className="mx-auto mt-4 max-w-4xl font-heading text-[28px] font-extrabold leading-[1.15] tracking-tight text-[#151515] sm:text-4xl lg:text-[44px] dark:text-[#F2F7F4]"
             >
-              <svg
-                viewBox="0 0 1440 320"
-                className="h-auto w-full text-[#0F5C4D] dark:text-[#1EB55E]"
-                fill="currentColor"
-                preserveAspectRatio="none"
-              >
-                <path d="M0,192L60,176C120,160,240,128,360,144C480,160,600,224,720,218.7C840,213,960,139,1080,128C1200,117,1320,171,1380,197.3L1440,224L1440,320L1380,320C1320,320,1200,320,1080,320C960,320,840,320,720,320C600,320,480,320,360,320C240,320,120,320,60,320L0,320Z" />
-              </svg>
-            </div>
-
-            <div className="relative text-center">
-              {/* Eyebrow */}
-              <div className="inline-flex flex-wrap items-center justify-center gap-x-2.5 gap-y-1 rounded-full border border-[#0F5C4D]/10 bg-[#F4F8F7] px-4 py-1.5 text-xs font-bold text-[#0F5C4D] shadow-[0_1px_2px_rgba(15,92,77,0.06)] dark:border-[#1FA971]/25 dark:bg-[#1FA971]/10 dark:text-[#7FE3B5]">
-                <span className="inline-flex items-center gap-1.5">
-                  <Sparkles className="h-3.5 w-3.5 fill-[#F5A524] text-[#F5A524]" />
-                  AI-Assisted Verified Services
+              {t.discover.title}{" "}
+              <span className="relative inline-block whitespace-nowrap">
+                <span className="bg-[linear-gradient(to_top,rgba(245,165,36,0.55)_32%,transparent_32%)] px-0.5 text-[#0F5C4D] [box-decoration-break:clone] dark:text-[#5FD9A3]">
+                  {t.discover.highlight}
                 </span>
-                <span aria-hidden="true" className="hidden h-3 w-px bg-[#0F5C4D]/20 sm:block dark:bg-white/20" />
-                <span className="inline-flex items-center gap-1.5 text-[#3A524C] dark:text-[#B5CBC3]">
-                  <span className="relative flex h-2 w-2">
-                    <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#1FA971] opacity-60" />
-                    <span className="relative inline-flex h-2 w-2 rounded-full bg-[#1FA971]" />
-                  </span>
-                  Swat Valley Pilot
-                </span>
-              </div>
+                {/* Yellow accent strokes */}
+                <svg
+                  aria-hidden="true"
+                  viewBox="0 0 40 40"
+                  className="absolute -end-7 -top-4 hidden h-8 w-8 text-[#F5A524] sm:block rtl:-scale-x-100"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="4"
+                  strokeLinecap="round"
+                >
+                  <path d="M8 6 L11 16" />
+                  <path d="M24 8 L18 18" />
+                  <path d="M34 20 L22 24" />
+                </svg>
+              </span>
+            </h1>
 
-              {/* Headline */}
-              <h1
-                id="home-hero-title"
-                className="mx-auto mt-5 max-w-3xl font-heading text-[28px] font-extrabold leading-[1.12] tracking-tight text-[#0B2E27] sm:text-4xl lg:text-[44px] dark:text-[#F2F7F4]"
-              >
-                {t.hero.title}{" "}
-                <span className="bg-gradient-to-r from-[#0F5C4D] via-[#168A5F] to-[#0F5C4D] bg-clip-text pb-[0.12em] text-transparent [-webkit-box-decoration-break:clone] [box-decoration-break:clone] sm:block dark:from-[#5FD9A3] dark:via-[#9BEBC6] dark:to-[#5FD9A3]">
-                  {t.hero.highlight}
-                </span>
-              </h1>
+            {/* Subtitle */}
+            <p className="mx-auto mt-3 max-w-2xl text-[15px] leading-relaxed text-[#3E4F47] sm:text-[17px] dark:text-[#B8C9C0]">
+              {t.discover.subtitle}
+            </p>
+          </div>
 
-              {/* Subtitle */}
-              <p className="mx-auto mt-4 max-w-2xl text-[15px] leading-relaxed text-[#4A625C] sm:text-[17px] dark:text-[#B8C9C0]">
-                {t.hero.subtitle}
-              </p>
+          {/* Smart AI search (location selector + voice search built in) */}
+          <div className="relative mt-7 sm:mt-8">
+            <HeroAISearch />
+          </div>
 
-              {/* Tagline */}
-              <div className="mt-5 flex items-center justify-center gap-3">
-                <span aria-hidden="true" className="hidden h-px w-14 bg-gradient-to-r from-transparent to-[#F5A524] sm:block" />
-                <span className="text-[11px] font-bold uppercase tracking-[0.12em] text-[#0F5C4D] sm:text-xs sm:tracking-[0.18em] dark:text-[#7FE3B5]">
-                  {t.brand.tagline}
-                </span>
-                <span aria-hidden="true" className="hidden h-px w-14 bg-gradient-to-l from-transparent to-[#F5A524] sm:block" />
-              </div>
-            </div>
-
-            <div className="relative mt-8">
-              <HeroAISearch />
-            </div>
+          {/* Popular service categories */}
+          <div className="mt-10">
+            <h2 className="flex items-center gap-3 font-heading text-xl font-extrabold text-[#151515] sm:text-2xl dark:text-[#F2F7F4]">
+              <span aria-hidden="true" className="h-6 w-1 rounded-full bg-[#F5A524]" />
+              {t.discover.popularTitle}
+            </h2>
+            <ul className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-4 sm:gap-4 lg:grid-cols-8">
+              {POPULAR_SERVICES.map(({ id, label, icon: Icon }) => (
+                <li key={id}>
+                  <Link
+                    href={`/services?cat=${id}`}
+                    className="group flex h-full flex-col items-center justify-center gap-3 rounded-2xl border border-[#E2EBE6] bg-white px-2 py-5 text-center shadow-[0_8px_22px_-16px_rgba(15,92,77,0.45)] transition-all duration-200 hover:-translate-y-1 hover:border-[#1FA971]/60 hover:shadow-[0_16px_30px_-16px_rgba(15,92,77,0.55)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1FA971] dark:border-[#24382E] dark:bg-[#111F18]"
+                  >
+                    <Icon
+                      className="h-9 w-9 text-[#0F5C4D] transition-transform duration-200 group-hover:scale-110 dark:text-[#5FD9A3]"
+                      strokeWidth={2}
+                      aria-hidden="true"
+                    />
+                    <span className="text-sm font-bold text-[#151515] transition-colors group-hover:text-[#0F5C4D] sm:text-[15px] dark:text-[#F2F7F4] dark:group-hover:text-[#5FD9A3]">
+                      {label}
+                    </span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
       </section>
