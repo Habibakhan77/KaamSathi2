@@ -10,20 +10,11 @@ import {
   GraduationCap,
   Sparkles,
   ExternalLink,
-  Linkedin,
-  Facebook,
 } from "lucide-react";
 import { Logo } from "@/components/brand/Logo";
+import { SocialGlyph } from "@/components/brand/SocialIcons";
 import { useLanguage } from "@/lib/i18n/LanguageContext";
-import { contactConfig, getWhatsAppUrl } from "@/config/contact";
-
-function TikTokIcon({ className = "w-4 h-4" }: { className?: string }) {
-  return (
-    <svg className={className} fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-      <path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.24 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z" />
-    </svg>
-  );
-}
+import { SOCIAL_LINKS, contactConfig, getWhatsAppUrl } from "@/config/contact";
 
 export function Footer() {
   const { t } = useLanguage();
@@ -69,38 +60,23 @@ export function Footer() {
               <span>Har kaam ke liye, aik bharosemand saathi.</span>
             </div>
 
-            {/* Social Links */}
-            <div className="flex items-center gap-3 pt-2">
-              <a
-                href={contactConfig.linkedIn}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Habiba Khan LinkedIn"
-                className="w-8 h-8 rounded-xl bg-emerald-50 dark:bg-emerald-950 text-[#0A5C2E] dark:text-[#1EB55E] flex items-center justify-center hover:bg-[#0A5C2E] hover:text-white transition-colors"
-              >
-                <Linkedin className="w-4 h-4" />
-              </a>
-              <a
-                href={contactConfig.facebookUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Habibytes Facebook"
-                className="w-8 h-8 rounded-xl bg-emerald-50 dark:bg-emerald-950 text-[#0A5C2E] dark:text-[#1EB55E] flex items-center justify-center hover:bg-[#0A5C2E] hover:text-white transition-colors"
-              >
-                <Facebook className="w-4 h-4" />
-              </a>
-              {Boolean(contactConfig.tiktokUrl && contactConfig.tiktokUrl.trim()) && (
-                <a
-                  href={contactConfig.tiktokUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="TikTok"
-                  className="w-8 h-8 rounded-xl bg-emerald-50 dark:bg-emerald-950 text-[#0A5C2E] dark:text-[#1EB55E] flex items-center justify-center hover:bg-[#0A5C2E] hover:text-white transition-colors"
-                >
-                  <TikTokIcon className="w-4 h-4" />
-                </a>
-              )}
-            </div>
+            {/* Social Links (icon + label form one link) */}
+            <ul className="flex flex-wrap items-center gap-2 pt-2" aria-label="KaamSaathi social media">
+              {SOCIAL_LINKS.map((s) => (
+                <li key={s.id}>
+                  <a
+                    href={s.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={s.ariaLabel}
+                    className="h-8 px-2.5 rounded-xl bg-emerald-50 dark:bg-emerald-950 text-[#0A5C2E] dark:text-[#1EB55E] inline-flex items-center gap-1.5 text-xs font-semibold hover:bg-[#0A5C2E] hover:text-white dark:hover:bg-[#1EB55E] dark:hover:text-[#0E1A14] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0A5C2E]"
+                  >
+                    <SocialGlyph platform={s.id} className="w-4 h-4" />
+                    <span>{s.label}</span>
+                  </a>
+                </li>
+              ))}
+            </ul>
           </div>
 
           {/* Quick Links */}

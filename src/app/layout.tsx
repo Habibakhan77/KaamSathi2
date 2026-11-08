@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
 import "@/styles/globals.css";
 import { LanguageProvider } from "@/lib/i18n/LanguageContext";
+import { LocationProvider } from "@/lib/location/LocationContext";
 import { TopContactBar } from "@/components/layout/TopContactBar";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
-import { FloatingAIAssistant } from "@/components/ai/FloatingAIAssistant";
 import { FloatingWhatsApp } from "@/components/common/FloatingWhatsApp";
+import { SupportAssistant } from "@/components/common/SupportAssistant";
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000"),
@@ -54,6 +55,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className="antialiased selection:bg-emerald-700 selection:text-white">
         <LanguageProvider>
+          <LocationProvider>
           <div className="flex flex-col min-h-screen">
             {/* Slim Top Contact Bar */}
             <TopContactBar />
@@ -61,10 +63,11 @@ export default function RootLayout({
             <Navbar />
             <main className="flex-1">{children}</main>
             <Footer />
-            {/* Floating Quick Action Buttons (Separated left & right so they never overlap) */}
+            {/* Floating Quick Action Buttons: WhatsApp bottom-left, Support Assistant bottom-right */}
             <FloatingWhatsApp />
-            <FloatingAIAssistant />
+            <SupportAssistant />
           </div>
+          </LocationProvider>
         </LanguageProvider>
       </body>
     </html>

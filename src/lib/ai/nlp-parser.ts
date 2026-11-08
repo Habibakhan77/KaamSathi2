@@ -1,9 +1,12 @@
 import { z } from "zod";
 import { AIParsedIntent } from "../types";
+import { isWholeRegion } from "../location/swat-areas";
 
 export const aiParseInputSchema = z.object({
   query: z.string().min(2, "Search query is too short").max(1000, "Query is too long"),
   language: z.enum(["en", "ur", "ps", "roman_ur"]).optional().default("en"),
+  // Area the user picked in the navbar; used only when the query names no area.
+  fallbackLocation: z.string().max(60).optional(),
 });
 
 export const aiParseResponseSchema = z.object({
@@ -21,7 +24,7 @@ export const aiParseResponseSchema = z.object({
 export type AIParseResponse = z.infer<typeof aiParseResponseSchema>;
 
 // Keyword dictionaries for fallback rule engine
-const CATEGORY_KEYWORDS: Record<string, string[]> = {
+export const CATEGORY_KEYWORDS: Record<string, string[]> = {
   "ac-technician": [
     "ac", "air conditioner", "inverter", "cooling", "thand", "gas", "chilling", "compressor", "leakage",
     "outdoor unit", "indoor", "trip", "r410", "r32",
@@ -73,8 +76,15 @@ const SWAT_LOCATIONS: Record<string, string[]> = {
   "Saidu Sharif": ["saidu", "saidu sharif", "hospital road", "wadudia", "jahanzeb", "سیدو", "سیدو شریف"],
   "Kanju": ["kanju", "township", "airport", "kanju pull", "کانجو", "کانجو ټاون شپ"],
   "Barikot": ["barikot", "ghalegay", "bazira", "بریکوٹ", "بریکوټ"],
-  "Madyan": ["madyan", "behrain", "madayan", "مدین"],
+  "Madyan": ["madyan", "madayan", "مدین"],
   "Fizagat": ["fizagat", "fiza gat", "bypass", "فیضاگٹ", "فضا ګټ"],
+  "Matta": ["matta", "مٹہ", "مټه"],
+  "Khwazakhela": ["khwazakhela", "khwaza khela", "خوازہ خیلہ", "خوازه خېله"],
+  "Bahrain": ["bahrain", "behrain", "بحرین"],
+  "Kalam": ["kalam", "کالام"],
+  "Kabal": ["kabal", "کبل"],
+  "Charbagh": ["charbagh", "char bagh", "چارباغ"],
+  "Malam Jabba": ["malam jabba", "malamjabba", "مالم جبہ", "مالم جبه"],
 };
 
 const URGENCY_TRIGGERS = {
@@ -94,10 +104,12 @@ const URGENCY_TRIGGERS = {
 
 export async function parseServiceIntent(
   rawInput: string,
-  preferredLanguage: string = "en"
+  preferredLanguage: string = "en",
+  fallbackLocation?: string
 ): Promise<AIParseResponse> {
   const clean = rawInput.trim();
   const lower = clean.toLowerCase();
+  const fallback = fallbackLocation && !isWholeRegion(fallbackLocation) ? fallbackLocation : undefined;
 
   // 1. If OpenAI API key is present in environment, invoke it with strict schema
   if (process.env.OPENAI_API_KEY && process.env.OPENAI_API_KEY.startsWith("sk-")) {
@@ -134,6 +146,9 @@ Parse user problem queries (written in English, Urdu, Pashto, or Roman Urdu) int
       if (response.ok) {
         const data = await response.json();
         const parsed = JSON.parse(data.choices[0].message.content);
+        if (fallback && (!parsed.location || isWholeRegion(parsed.location))) {
+          parsed.location = fallback;
+        }
         return {
           ...parsed,
           rawText: clean,
@@ -162,7 +177,8 @@ Parse user problem queries (written in English, Urdu, Pashto, or Roman Urdu) int
     }
   }
 
-  let matchedLocation = "Mingora"; // Default central hub of Swat
+  // Navbar selection if provided, otherwise Mingora (central hub of Swat)
+  let matchedLocation = fallback ?? "Mingora";
   for (const [loc, words] of Object.entries(SWAT_LOCATIONS)) {
     for (const w of words) {
       if (lower.includes(w.toLowerCase())) {
