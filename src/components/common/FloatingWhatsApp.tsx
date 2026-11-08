@@ -1,8 +1,8 @@
 "use client";
 
 import React, { useState } from "react";
-import { Phone, MessageCircle, X } from "lucide-react";
 import { contactConfig, getWhatsAppUrl } from "@/config/contact";
+import { SocialGlyph } from "@/components/brand/SocialIcons";
 import { useLanguage } from "@/lib/i18n/LanguageContext";
 
 export function FloatingWhatsApp() {
@@ -14,11 +14,11 @@ export function FloatingWhatsApp() {
   );
 
   return (
-    // Fixed on bottom-left so it NEVER collides with FloatingAIAssistant (which is on bottom-right)
+    // Bottom-right, stacked directly above the Support Assistant launcher (58px button + 14px gap).
     <div
-      className={`fixed bottom-6 ${
-        isRTL ? "right-6 sm:right-auto sm:left-6" : "left-6"
-      } z-40 flex items-center gap-2`}
+      className={`fixed right-4 sm:right-6 bottom-[calc(88px+env(safe-area-inset-bottom))] sm:bottom-[calc(96px+env(safe-area-inset-bottom))] z-40 flex items-center gap-2 ${
+        isRTL ? "flex-row-reverse" : ""
+      }`}
     >
       {/* Tooltip on hover */}
       {showTooltip && (
@@ -37,13 +37,9 @@ export function FloatingWhatsApp() {
         onMouseEnter={() => setShowTooltip(true)}
         onMouseLeave={() => setShowTooltip(false)}
         aria-label={`Open WhatsApp chat with KaamSaathi helpline (${contactConfig.phoneDisplay})`}
-        className="group relative flex items-center justify-center w-12 h-12 rounded-full bg-[#25D366] hover:bg-[#20bd5a] text-white shadow-elevated transition-all transform hover:scale-105 active:scale-95 focus:outline-none focus:ring-4 focus:ring-emerald-300"
+        className="flex items-center justify-center w-[58px] h-[58px] rounded-full border-[3px] border-white bg-[#25D366] hover:bg-[#20bd5a] text-white shadow-[0_6px_18px_rgba(0,0,0,0.18)] transition-transform duration-200 hover:scale-105 active:scale-95 focus:outline-none focus-visible:ring-4 focus-visible:ring-emerald-300"
       >
-        {/* Pulse beacon */}
-        <span className="absolute -top-1 -right-1 w-3 h-3 bg-emerald-400 rounded-full animate-ping opacity-75" />
-        <span className="absolute -top-1 -right-1 w-3 h-3 bg-white rounded-full border-2 border-[#25D366]" />
-
-        <Phone className="w-5 h-5 text-white fill-white transition-transform group-hover:rotate-12" />
+        <SocialGlyph platform="whatsapp" className="w-7 h-7" />
       </a>
     </div>
   );

@@ -149,9 +149,9 @@ export function SupportAssistant() {
     }
   };
 
-  // Opposite corner from the WhatsApp button.
-  const side = isRTL ? "left-4 sm:left-auto sm:right-6" : "right-4 sm:right-6";
-  const origin = isRTL ? "origin-bottom-left sm:origin-bottom-right" : "origin-bottom-right";
+  // Bottom-right, directly below the WhatsApp button (see FloatingWhatsApp).
+  const side = "right-4 sm:right-6";
+  const origin = "origin-bottom-right";
   const iconBtn =
     "p-1.5 rounded-full text-[#3E4F47] dark:text-[#B8C9C0] hover:bg-white/80 dark:hover:bg-white/10 hover:text-[#075B35] dark:hover:text-[#1EB55E] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#075B35]";
 
@@ -162,7 +162,7 @@ export function SupportAssistant() {
         role="dialog"
         aria-labelledby={titleId}
         aria-hidden={!open}
-        className={`fixed z-50 bottom-[5.25rem] ${side} ${origin} w-[calc(100vw-2rem)] max-w-[400px] h-[min(600px,calc(100vh-7rem))] flex flex-col rounded-3xl bg-white dark:bg-[#111F18] border border-[#DCE9E0] dark:border-[#24382E] shadow-elevated overflow-hidden transition-all duration-200 ease-out ${
+        className={`fixed z-50 bottom-[calc(86px+env(safe-area-inset-bottom))] sm:bottom-[calc(94px+env(safe-area-inset-bottom))] ${side} ${origin} w-[calc(100vw-2rem)] max-w-[400px] h-[min(600px,calc(100vh-8rem))] flex flex-col rounded-3xl bg-white dark:bg-[#111F18] border border-[#DCE9E0] dark:border-[#24382E] shadow-elevated overflow-hidden transition-all duration-200 ease-out ${
           open ? "opacity-100 translate-y-0 scale-100 visible" : "opacity-0 translate-y-3 scale-95 invisible pointer-events-none"
         }`}
       >
@@ -318,9 +318,9 @@ export function SupportAssistant() {
         aria-expanded={open}
         aria-haspopup="dialog"
         title="Support Assistant"
-        className={`fixed z-50 bottom-6 ${side} w-12 h-12 rounded-full bg-[#075B35] hover:bg-[#05482A] text-white shadow-elevated flex items-center justify-center transition-transform duration-200 hover:scale-105 active:scale-95 focus:outline-none focus-visible:ring-4 focus-visible:ring-emerald-300`}
+        className={`fixed z-50 bottom-[calc(16px+env(safe-area-inset-bottom))] sm:bottom-[calc(24px+env(safe-area-inset-bottom))] ${side} w-[58px] h-[58px] rounded-full border-[3px] border-white bg-[#075B35] hover:bg-[#05482A] text-white shadow-[0_6px_18px_rgba(0,0,0,0.18)] flex items-center justify-center transition-transform duration-200 hover:scale-105 active:scale-95 focus:outline-none focus-visible:ring-4 focus-visible:ring-emerald-300`}
       >
-        {open ? <ChevronDown className="w-6 h-6" /> : <Headset className="w-6 h-6" strokeWidth={2.25} aria-hidden="true" />}
+        {open ? <ChevronDown className="w-7 h-7" /> : <Headset className="w-7 h-7" strokeWidth={2.25} aria-hidden="true" />}
       </button>
     </>
   );
