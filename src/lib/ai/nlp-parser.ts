@@ -24,7 +24,7 @@ export const aiParseResponseSchema = z.object({
 export type AIParseResponse = z.infer<typeof aiParseResponseSchema>;
 
 // Keyword dictionaries for fallback rule engine
-const CATEGORY_KEYWORDS: Record<string, string[]> = {
+export const CATEGORY_KEYWORDS: Record<string, string[]> = {
   "ac-technician": [
     "ac", "air conditioner", "inverter", "cooling", "thand", "gas", "chilling", "compressor", "leakage",
     "outdoor unit", "indoor", "trip", "r410", "r32",

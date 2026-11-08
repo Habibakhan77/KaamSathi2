@@ -250,11 +250,15 @@ export function Navbar() {
       >
         {/* ── LEFT: Logo ─────────────────────────────────────────────────── */}
         <div className="flex-shrink-0">
-          <span className="sm:hidden">
+          {/* Very narrow phones (<360px) keep the compact size so nothing overflows */}
+          <span className="flex min-[360px]:hidden">
             <Logo size="sm" showTagline={false} />
           </span>
-          <span className="hidden sm:inline-flex">
-            <Logo size="md" showTagline={false} />
+          <span className="hidden min-[360px]:flex sm:hidden">
+            <Logo size="navSm" showTagline={false} />
+          </span>
+          <span className="hidden sm:flex">
+            <Logo size="nav" showTagline={false} />
           </span>
         </div>
 

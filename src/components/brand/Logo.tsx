@@ -6,7 +6,8 @@ import { useLanguage } from "@/lib/i18n/LanguageContext";
 
 export interface LogoProps {
   variant?: "full" | "icon-only" | "light" | "dark";
-  size?: "sm" | "md" | "lg" | "xl";
+  /** `navSm` / `nav` are the main-navbar sizes (phone / tablet+desktop). */
+  size?: "sm" | "navSm" | "md" | "nav" | "lg" | "xl";
   className?: string;
   href?: string;
   showTagline?: boolean;
@@ -31,6 +32,18 @@ export function Logo({
       height: 28,
       fontSize: "text-lg",
       taglineSize: "text-[10px]",
+    },
+    navSm: {
+      icon: 34,
+      height: 34,
+      fontSize: "text-[1.3rem]",
+      taglineSize: "text-[11px]",
+    },
+    nav: {
+      icon: 46,
+      height: 46,
+      fontSize: "text-[1.8rem]",
+      taglineSize: "text-xs",
     },
     md: {
       icon: 38,
